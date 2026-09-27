@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import SmartCityLogo from "../../components/SmartCityLogo";
+import heroCityscape from "/hero-cityscape.jpg";
 import {
   Camera,
   Cpu,
@@ -15,21 +16,37 @@ import {
   Search,
   ShieldCheck,
   Building2,
-  Check
+  Check,
+  Sparkles,
+  Activity
 } from "lucide-react";
 import { api } from "../../api/client";
 
 export const Home = () => {
   const navigate = useNavigate();
   const [trackId, setTrackId] = useState("");
-  const [stats, setStats] = useState({
-    total: "12,458",
-    resolved: "9,214",
-    inProgress: "2,456"
-  });
+  const [realStats, setRealStats] = useState(null);
 
   useEffect(() => {
-    api.get("/health").catch(() => {});
+    // Attempt to load real statistics from backend if user has an active session
+    const token = localStorage.getItem("token");
+    if (token) {
+      api.get("/complaints/dashboard")
+        .then((res) => {
+          if (res.data?.data?.stats) {
+            setRealStats(res.data.data.stats);
+          }
+        })
+        .catch(() => {
+          api.get("/admin/dashboard")
+            .then((res) => {
+              if (res.data?.data?.stats) {
+                setRealStats(res.data.data.stats);
+              }
+            })
+            .catch(() => { });
+        });
+    }
   }, []);
 
   const handleTrackSubmit = (e) => {
@@ -43,120 +60,150 @@ export const Home = () => {
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans text-slate-800">
       <Navbar />
 
-      {/* HERO SECTION WITH CITY SKYLINE TWILIGHT BACKDROP */}
-      <section className="relative overflow-hidden min-h-[580px] lg:min-h-[640px] flex items-center">
-        {/* City Skyline Background Image with Deep Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=2400&q=85"
-            alt="Smart City Skyline"
-            className="w-full h-full object-cover object-center"
+      {/* HERO SECTION WITH CINEMATIC SMART CITY TWILIGHT BACKDROP */}
+      <section className="relative overflow-hidden min-h-[580px] lg:min-h-[640px] flex items-center bg-slate-950">
+        {/* City Skyline Background Image covering entire hero */}
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-[position:65%_center] sm:bg-center"
+          style={{ backgroundImage: `url(${heroCityscape})` }}
+        >
+          {/* Desktop/Tablet Directional Dark Overlay:
+              Darker on left for crisp text contrast, clear on right to preserve sunset, skyline, bridge & river lights */}
+          <div
+            className="absolute inset-0 hidden sm:block pointer-events-none"
+            style={{
+              background: `linear-gradient(90deg, rgba(5, 15, 35, 0.93) 0%, rgba(8, 20, 45, 0.82) 35%, rgba(8, 20, 45, 0.40) 65%, rgba(8, 20, 45, 0.08) 100%)`
+            }}
           />
-          {/* Deep Navy/Black Gradient Overlay matching reference aesthetic */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-900/60 backdrop-blur-[1px]"></div>
+
+          {/* Mobile Overlay: Vertical gradient for clear readability with glowing waterfront bottom */}
+          <div
+            className="absolute inset-0 sm:hidden pointer-events-none"
+            style={{
+              background: `linear-gradient(180deg, rgba(5, 15, 35, 0.94) 0%, rgba(8, 20, 45, 0.82) 55%, rgba(8, 20, 45, 0.45) 100%)`
+            }}
+          />
+
+          {/* Subtle Bottom Transition Gradient into the next section */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+            style={{
+              background: `linear-gradient(to bottom, transparent 35%, rgba(5, 15, 35, 0.45) 100%)`
+            }}
+          />
+
+          {/* Decorative Smart City Network Dots on left darkened portion (5-8% opacity) */}
+          <div className="absolute inset-y-0 left-0 w-full sm:w-1/2 pointer-events-none opacity-[0.06] bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:22px_22px]" />
         </div>
 
-        {/* Hero Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Headline and Actions */}
+        {/* Hero Content Container */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Column: Headline, Description & CTAs */}
             <div className="lg:col-span-7 space-y-6 text-white">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15]">
+              {/* Civic Tag Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 backdrop-blur-md text-xs font-semibold text-blue-300">
+                <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                <span>Next-Gen Civic Governance Platform</span>
+              </div>
+
+              {/* Headline with responsive clamp sizing */}
+              <h1 className="text-white font-extrabold tracking-tight leading-[1.12] text-[clamp(2.4rem,5vw,4.25rem)]">
                 A Cleaner, <br />
-                <span className="text-blue-400">Safer, Smarter City</span>
+                <span className="text-[#38BDF8]">Safer, Smarter City</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed font-normal">
+              {/* Description */}
+              <p className="text-base sm:text-lg text-slate-200/90 max-w-xl leading-relaxed font-normal">
                 Report civic issues, track progress and help us build a better city together. Powered by real-time computer vision AI and verified on-site field resolutions.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-3">
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                 <Link
                   to="/citizen/report"
-                  className="px-7 py-3.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm sm:text-base shadow-lg shadow-blue-600/30 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                  className="px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-blue-600/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-600/40 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2 group"
                 >
-                  Report a Complaint <ArrowRight className="w-4 h-4" />
+                  Report a Complaint
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <a
                   href="#track-section"
-                  className="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm sm:text-base border border-white/25 backdrop-blur-md transition-all flex items-center gap-2"
+                  className="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm sm:text-base border border-white/25 backdrop-blur-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
                 >
                   Track Complaint
                 </a>
               </div>
+
+              {/* Feature Badges */}
+              <div className="pt-3 flex flex-wrap items-center gap-4 text-xs text-slate-300/80 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <Cpu className="w-4 h-4 text-[#38BDF8]" /> AI Vision Powered
+                </span>
+                <span className="w-1 h-1 rounded-full bg-slate-500" />
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-emerald-400" /> Real-time Tracking
+                </span>
+                <span className="w-1 h-1 rounded-full bg-slate-500" />
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-amber-400" /> Verified Proofs
+                </span>
+              </div>
             </div>
 
-            {/* Right Column: Floating Stats Cards (matching reference design) */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="w-full max-w-sm space-y-3.5">
-                {/* Total Complaints */}
-                <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 border border-white/40 shadow-2xl flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                      Total Complaints
-                    </p>
-                    <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
-                      {stats.total}
-                    </p>
-                    <p className="text-xs font-bold text-emerald-600 flex items-center gap-1 mt-1">
-                      <TrendingUp className="w-3.5 h-3.5" /> ↑ 12%
-                    </p>
+            {/* Right Column: Real Stats Cards if available, or subtle live grid indicator */}
+            {realStats ? (
+              <div className="lg:col-span-5 flex justify-center lg:justify-end w-full">
+                <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 sm:gap-3 w-full max-w-lg lg:max-w-xs">
+                  {/* Real Total Complaints */}
+                  <div className="bg-slate-900/60 hover:bg-slate-900/75 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/20 shadow-xl transition-all flex flex-col justify-between">
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">Total</p>
+                      <span className="p-1 sm:p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-400/20 flex-shrink-0">
+                        <TrendingUp className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                      </span>
+                    </div>
+                    <p className="text-lg sm:text-2xl font-extrabold text-white mt-1">{realStats.total ?? 0}</p>
                   </div>
-                  {/* Mini Bar Chart SVG */}
-                  <div className="flex items-end gap-1.5 h-12 px-2">
-                    <span className="w-2 h-5 bg-blue-200 rounded-sm"></span>
-                    <span className="w-2 h-7 bg-blue-300 rounded-sm"></span>
-                    <span className="w-2 h-10 bg-blue-500 rounded-sm"></span>
-                    <span className="w-2 h-12 bg-blue-600 rounded-sm"></span>
-                  </div>
-                </div>
 
-                {/* Resolved */}
-                <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 border border-white/40 shadow-2xl flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                      Resolved
-                    </p>
-                    <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
-                      {stats.resolved}
-                    </p>
-                    <p className="text-xs font-bold text-emerald-600 flex items-center gap-1 mt-1">
-                      <TrendingUp className="w-3.5 h-3.5" /> ↑ 18%
-                    </p>
+                  {/* Real Resolved */}
+                  <div className="bg-slate-900/60 hover:bg-slate-900/75 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/20 shadow-xl transition-all flex flex-col justify-between">
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">Resolved</p>
+                      <span className="p-1 sm:p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-400/20 flex-shrink-0">
+                        <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                      </span>
+                    </div>
+                    <p className="text-lg sm:text-2xl font-extrabold text-white mt-1">{realStats.resolved ?? 0}</p>
                   </div>
-                  {/* Mini Bar Chart SVG */}
-                  <div className="flex items-end gap-1.5 h-12 px-2">
-                    <span className="w-2 h-6 bg-emerald-200 rounded-sm"></span>
-                    <span className="w-2 h-8 bg-emerald-300 rounded-sm"></span>
-                    <span className="w-2 h-10 bg-emerald-500 rounded-sm"></span>
-                    <span className="w-2 h-12 bg-emerald-600 rounded-sm"></span>
-                  </div>
-                </div>
 
-                {/* In Progress */}
-                <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 border border-white/40 shadow-2xl flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                      In Progress
-                    </p>
-                    <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
-                      {stats.inProgress}
-                    </p>
-                    <p className="text-xs font-bold text-amber-600 flex items-center gap-1 mt-1">
-                      <TrendingUp className="w-3.5 h-3.5" /> ↑ 5%
-                    </p>
-                  </div>
-                  {/* Mini Bar Chart SVG */}
-                  <div className="flex items-end gap-1.5 h-12 px-2">
-                    <span className="w-2 h-4 bg-amber-200 rounded-sm"></span>
-                    <span className="w-2 h-6 bg-amber-300 rounded-sm"></span>
-                    <span className="w-2 h-9 bg-amber-400 rounded-sm"></span>
-                    <span className="w-2 h-11 bg-amber-500 rounded-sm"></span>
+                  {/* Real In Progress */}
+                  <div className="bg-slate-900/60 hover:bg-slate-900/75 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/20 shadow-xl transition-all flex flex-col justify-between">
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">In Progress</p>
+                      <span className="p-1 sm:p-1.5 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-400/20 flex-shrink-0">
+                        <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                      </span>
+                    </div>
+                    <p className="text-lg sm:text-2xl font-extrabold text-white mt-1">{realStats.inProgress ?? 0}</p>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              /* When no real stats are present, keep the right side clear so the beautiful sunset, skyline, bridge and river lights are fully visible */
+              <div className="lg:col-span-5 hidden lg:flex flex-col items-end justify-end pointer-events-none">
+                <div className="bg-slate-900/40 backdrop-blur-md border border-white/15 rounded-2xl px-4 py-3 text-right max-w-xs shadow-lg">
+                  <div className="flex items-center gap-2 justify-end text-xs font-bold text-blue-300">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Live Municipal Grid Active</span>
+                  </div>
+                  <p className="text-[11px] text-slate-300/80 mt-1">
+                    24/7 AI-assisted automated triage and municipal field dispatch
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
