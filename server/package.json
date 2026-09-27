@@ -1,0 +1,41 @@
+{
+  "name": "server",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "devmark server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node src/db/seed.js",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "author": "chaitanya",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^2.23.0",
+    "axios": "^1.20.0",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.7.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dayjs": "^1.11.23",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "form-data": "^4.0.6",
+    "jsonwebtoken": "^9.0.2",
+    "mailersend": "^2.6.0",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.0",
+    "mongoose-aggregate-paginate-v2": "^1.1.4",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.5",
+    "sib-api-v3-sdk": "^8.5.0",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

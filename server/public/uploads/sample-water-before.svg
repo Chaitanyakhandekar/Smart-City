@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#eff6ff"/>
+  <rect x="40" y="40" width="720" height="420" fill="none" stroke="#1d4ed8" stroke-width="4" stroke-dasharray="10,10" rx="12"/>
+  <circle cx="400" cy="200" r="60" fill="#1d4ed8" opacity="0.2"/>
+  <path d="M370 200 L400 170 L430 200 M400 170 L400 230" stroke="#1d4ed8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400" y="300" font-family="system-ui, sans-serif" font-size="24" font-weight="bold" fill="#1d4ed8" text-anchor="middle">WATER PIPELINE DAMAGE — BEFORE</text>
+  <text x="400" y="340" font-family="system-ui, sans-serif" font-size="16" fill="#6b7280" text-anchor="middle">Smart City Municipal Corporation Verification Record</text>
+</svg>

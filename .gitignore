@@ -1,0 +1,7 @@
+
+server/.env
+client/.env
+client/node_modules
+client/build
+client/.DS_Store
+client/.vscode
