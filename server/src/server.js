@@ -30,7 +30,7 @@ server.use(
     origin: [
       "http://localhost:5173",
       "http://127.0.0.1:5173",
-      process.env.ALLOW_ORIGIN || "https://dev-mark.vercel.app"
+      process.env.ALLOW_ORIGIN || "https://smart-city-mu-wine.vercel.app"
     ],
     credentials: true
   })
