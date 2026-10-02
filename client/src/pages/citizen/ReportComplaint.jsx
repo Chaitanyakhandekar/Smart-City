@@ -323,7 +323,7 @@ export const ReportComplaint = () => {
                       {isPassed ? <Check className="w-4 h-4 stroke-[3]" /> : step.number}
                     </div>
                     <span
-                      className={`text-[11px] mt-1.5 font-semibold ${
+                      className={`text-[10px] sm:text-[11px] mt-1.5 font-semibold text-center ${
                         isActive ? "text-blue-600" : isPassed ? "text-slate-700" : "text-slate-400"
                       }`}
                     >
@@ -339,7 +339,7 @@ export const ReportComplaint = () => {
           {/* STEP 1: UPLOAD IMAGE FIRST & AI CLASSIFICATION */}
           {/* ============================================================ */}
           {currentStep === 1 && (
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs space-y-6 animate-in fade-in">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-8 border border-slate-200/80 shadow-xs space-y-6 animate-in fade-in">
               <div>
                 <h3 className="text-base font-bold text-slate-900">
                   Upload a photo of the issue
@@ -443,22 +443,22 @@ export const ReportComplaint = () => {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-                    <div className="bg-white p-3 rounded-xl border border-emerald-100 shadow-2xs">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 text-xs">
+                    <div className="bg-white p-2.5 sm:p-3 rounded-xl border border-emerald-100 shadow-2xs">
                       <span className="text-[10px] text-slate-400 font-bold uppercase">Category</span>
-                      <p className="font-extrabold text-slate-900 mt-0.5 text-sm">{aiResult.category}</p>
+                      <p className="font-extrabold text-slate-900 mt-0.5 text-xs sm:text-sm truncate">{aiResult.category}</p>
                     </div>
-                    <div className="bg-white p-3 rounded-xl border border-emerald-100 shadow-2xs">
+                    <div className="bg-white p-2.5 sm:p-3 rounded-xl border border-emerald-100 shadow-2xs">
                       <span className="text-[10px] text-slate-400 font-bold uppercase">Issue / Subcategory</span>
-                      <p className="font-extrabold text-slate-900 mt-0.5 text-sm">{aiResult.subcategory || "General Issue"}</p>
+                      <p className="font-extrabold text-slate-900 mt-0.5 text-xs sm:text-sm truncate">{aiResult.subcategory || "General Issue"}</p>
                     </div>
-                    <div className="bg-white p-3 rounded-xl border border-emerald-100 shadow-2xs">
+                    <div className="bg-white p-2.5 sm:p-3 rounded-xl border border-emerald-100 shadow-2xs">
                       <span className="text-[10px] text-slate-400 font-bold uppercase">Urgency</span>
-                      <p className="font-extrabold text-amber-600 mt-0.5 text-sm">{aiResult.priority || "MEDIUM"}</p>
+                      <p className="font-extrabold text-amber-600 mt-0.5 text-xs sm:text-sm truncate">{aiResult.priority || "MEDIUM"}</p>
                     </div>
-                    <div className="bg-white p-3 rounded-xl border border-emerald-100 shadow-2xs">
+                    <div className="bg-white p-2.5 sm:p-3 rounded-xl border border-emerald-100 shadow-2xs">
                       <span className="text-[10px] text-slate-400 font-bold uppercase">Status</span>
-                      <p className="font-extrabold text-emerald-600 mt-0.5 text-sm">Verified</p>
+                      <p className="font-extrabold text-emerald-600 mt-0.5 text-xs sm:text-sm truncate">Verified</p>
                     </div>
                   </div>
 

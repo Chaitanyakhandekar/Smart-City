@@ -1,3 +1,127 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Responsive Hero Background Image
+   Mobile-first: load mobile image by default, swap to desktop at 768px.
+   Only the appropriate image is downloaded by the browser. */
+.hero-bg {
+  background-image: url("/hero-cityscape-mob.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+@media (min-width: 768px) {
+  .hero-bg {
+    background-image: url("/hero-cityscape.jpg");
+    background-position: center;
+  }
+}
+
+/* ========================================================
+   GLOBAL RESPONSIVE TYPOGRAPHY & SCALING SYSTEM (CSS clamp)
+   ======================================================== */
+
+:root {
+  --font-fluid-xs: clamp(0.7rem, 2vw, 0.8rem);
+  --font-fluid-sm: clamp(0.75rem, 2.2vw, 0.875rem);
+  --font-fluid-body: clamp(0.875rem, 2.5vw, 1rem);
+  --font-fluid-lg: clamp(1rem, 2.8vw, 1.125rem);
+  --font-fluid-xl: clamp(1.25rem, 3.2vw, 1.5rem);
+  --font-fluid-section: clamp(1.5rem, 4vw, 2.25rem);
+  --font-fluid-page: clamp(1.75rem, 5vw, 3rem);
+  --spacing-fluid-inline: clamp(16px, 4vw, 40px);
+  --card-fluid-padding: clamp(16px, 2.5vw, 24px);
+}
+
+/* Fluid Typography Utilities */
+.text-fluid-xs {
+  font-size: var(--font-fluid-xs);
+  line-height: 1.35;
+}
+
+.text-fluid-sm {
+  font-size: var(--font-fluid-sm);
+  line-height: 1.4;
+}
+
+.text-fluid-body {
+  font-size: var(--font-fluid-body);
+  line-height: 1.5;
+}
+
+.text-fluid-lg {
+  font-size: var(--font-fluid-lg);
+  line-height: 1.5;
+}
+
+.text-fluid-xl {
+  font-size: var(--font-fluid-xl);
+  line-height: 1.3;
+}
+
+.text-fluid-section {
+  font-size: var(--font-fluid-section);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.text-fluid-page {
+  font-size: var(--font-fluid-page);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+/* Fluid Container Width */
+.responsive-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--spacing-fluid-inline);
+}
+
+/* Fluid Card Padding */
+.fluid-card-p {
+  padding: var(--card-fluid-padding);
+}
+
+/* Touch targets and mobile form accessibility:
+   Minimum 16px font-size on mobile inputs prevents iOS Safari auto-zoom */
+@media (max-width: 640px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Touch target helper */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Responsive Table Scroll Container */
+.responsive-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Safe Area Insets for Modern Mobile / PWA */
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Images, video & canvas protection against container overflow */
+img,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}

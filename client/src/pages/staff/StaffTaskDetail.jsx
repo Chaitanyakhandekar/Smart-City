@@ -326,7 +326,7 @@ export const StaffTaskDetail = () => {
       {/* MODAL: START WORK */}
       {showStartModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95 max-h-[90dvh] overflow-y-auto">
             <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
               <Wrench className="w-6 h-6" />
             </div>
@@ -379,7 +379,7 @@ export const StaffTaskDetail = () => {
       {/* MODAL: RESOLVE TASK (STRICTLY REQUIRES AFTER PHOTO & REMARKS) */}
       {showResolveModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl animate-in fade-in zoom-in-95">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl animate-in fade-in zoom-in-95 max-h-[90dvh] overflow-y-auto">
             <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4">
               <CheckCircle2 className="w-6 h-6" />
             </div>

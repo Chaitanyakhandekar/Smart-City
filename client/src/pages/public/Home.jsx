@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import SmartCityLogo from "../../components/SmartCityLogo";
-import heroCityscape from "/hero-cityscape.jpg";
+
 import {
   Camera,
   Cpu,
@@ -64,8 +64,7 @@ export const Home = () => {
       <section className="relative overflow-hidden min-h-[580px] lg:min-h-[640px] flex items-center bg-slate-950">
         {/* City Skyline Background Image covering entire hero */}
         <div
-          className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-[position:65%_center] sm:bg-center"
-          style={{ backgroundImage: `url(${heroCityscape})` }}
+          className="absolute inset-0 z-0 hero-bg"
         >
           {/* Desktop/Tablet Directional Dark Overlay:
               Darker on left for crisp text contrast, clear on right to preserve sunset, skyline, bridge & river lights */}
@@ -268,19 +267,19 @@ export const Home = () => {
       </section>
 
       {/* TRACK COMPLAINT SECTION */}
-      <section id="track-section" className="py-16 bg-slate-50 border-b border-slate-200/80">
+      <section id="track-section" className="py-12 sm:py-16 bg-slate-50 border-b border-slate-200/80">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
             Citizen Transparency
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+          <h2 className="text-fluid-section font-extrabold text-slate-900 mt-1">
             Track Your Complaint Progress
           </h2>
-          <p className="text-sm text-slate-500 mt-2 max-w-lg mx-auto">
+          <p className="text-fluid-sm text-slate-500 mt-2 max-w-lg mx-auto">
             Have a complaint reference number? Enter it below to check current status, assigned field officers, and repair updates.
           </p>
 
-          <form onSubmit={handleTrackSubmit} className="mt-8 flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
+          <form onSubmit={handleTrackSubmit} className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
             <div className="relative w-full">
               <input
                 type="text"
@@ -293,7 +292,7 @@ export const Home = () => {
             </div>
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md transition-all whitespace-nowrap"
+              className="w-full sm:w-auto px-6 py-3 min-h-[44px] rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md transition-all whitespace-nowrap"
             >
               Track Now
             </button>
@@ -302,15 +301,15 @@ export const Home = () => {
       </section>
 
       {/* HOW IT WORKS / MUNICIPAL LIFECYCLE */}
-      <section id="about" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+      <section id="about" className="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <span className="text-xs font-bold uppercase tracking-widest text-blue-600">
             End-to-End Governance
           </span>
-          <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl mt-1">
+          <h2 className="text-fluid-section font-extrabold text-slate-900 mt-1">
             How The Civic Platform Works
           </h2>
-          <p className="mt-3 text-slate-600 text-sm sm:text-base">
+          <p className="mt-2 sm:mt-3 text-slate-600 text-fluid-body">
             Transparent, verified resolution from report submission to citizen confirmation.
           </p>
         </div>

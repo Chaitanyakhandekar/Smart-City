@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
+import MobileNavBottom from "../../components/MobileNavBottom";
 import { notificationApi } from "../../api/client";
 import { Bell, Check, ArrowRight, Loader2 } from "lucide-react";
 import dayjs from "dayjs";
@@ -42,26 +43,26 @@ export const StaffNotifications = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900">
                 Staff Alerts & Assignments
               </h1>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
                 New task dispatches and grievance status escalations
               </p>
             </div>
             {notifications.some((n) => !n.isRead) && (
               <button
                 onClick={handleMarkAll}
-                className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 flex items-center gap-1.5"
+                className="self-start sm:self-auto px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 flex items-center gap-1.5 shadow-xs"
               >
                 <Check className="w-3.5 h-3.5 text-amber-600" /> Mark All Read
               </button>
@@ -119,6 +120,8 @@ export const StaffNotifications = () => {
           </div>
         </main>
       </div>
+
+      <MobileNavBottom />
     </div>
   );
 };

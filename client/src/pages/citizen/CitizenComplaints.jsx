@@ -76,7 +76,7 @@ export const CitizenComplaints = () => {
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
                 My Grievance History
               </h1>
               <p className="text-xs text-slate-500 mt-1">
@@ -96,7 +96,7 @@ export const CitizenComplaints = () => {
               </button>
               <Link
                 to="/citizen/report"
-                className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm hover:shadow flex items-center gap-2 transition-all"
+                className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm hover:shadow flex items-center gap-2 transition-all whitespace-nowrap"
               >
                 <PlusCircle className="w-4 h-4" /> Report Issue
               </Link>
@@ -117,7 +117,7 @@ export const CitizenComplaints = () => {
                 />
               </form>
 
-              <div className="flex items-center gap-2 w-full md:w-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full md:w-auto md:flex md:items-center">
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}

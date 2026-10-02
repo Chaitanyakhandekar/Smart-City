@@ -67,7 +67,7 @@ export const StaffDashboard = () => {
 
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           {/* Header Banner */}
-          <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 rounded-3xl p-5 sm:p-8 text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold uppercase tracking-wider text-blue-300">
@@ -77,14 +77,14 @@ export const StaffDashboard = () => {
                   {user?.department || "Municipal Field Department"}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold mt-1">
                 Officer {user?.name}
               </h1>
               <p className="text-slate-300 text-xs sm:text-sm mt-1.5 max-w-xl">
                 Inspect assigned grievances, update field progress, and submit verified completion photographs to resolve cases.
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <button
                 type="button"
                 onClick={() => fetchDashboard(true)}
@@ -97,7 +97,7 @@ export const StaffDashboard = () => {
               </button>
               <Link
                 to="/staff/tasks"
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2 whitespace-nowrap"
+                className="px-4 sm:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2 whitespace-nowrap"
               >
                 <CheckSquare className="w-4 h-4" />
                 View Assigned Tasks
@@ -106,7 +106,7 @@ export const StaffDashboard = () => {
           </div>
 
           {/* Metric Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
             <StatCard
               title="Assigned Tasks"
               value={data.stats.assigned}

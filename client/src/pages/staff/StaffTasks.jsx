@@ -72,7 +72,7 @@ export const StaffTasks = () => {
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
                 Assigned Field Tasks
               </h1>
               <p className="text-xs text-slate-500 mt-1">
@@ -104,7 +104,7 @@ export const StaffTasks = () => {
               />
             </form>
 
-            <div className="flex items-center gap-2 w-full md:w-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full md:w-auto md:flex md:items-center">
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}

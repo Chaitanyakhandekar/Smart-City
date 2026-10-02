@@ -63,18 +63,18 @@ export const Login = () => {
           {/* Header Card */}
           <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center mb-3">
-              <SmartCityLogo className="h-10 w-10 text-blue-600" />
+              <SmartCityLogo size="lg" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
               Sign In to Smart City
             </h2>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Unified Civic Grievance & Municipal Operations Portal
             </p>
           </div>
 
           {/* Quick Demo Fill Buttons (For Quick Evaluation) */}
-          <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-4 mb-6 shadow-xs">
+          <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-3.5 sm:p-4 mb-6 shadow-xs">
             <div className="flex items-center justify-between text-xs font-semibold text-blue-900 mb-2.5">
               <span className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-blue-600" /> 1-Click Evaluation Accounts
@@ -85,7 +85,7 @@ export const Login = () => {
               <button
                 type="button"
                 onClick={() => fillDemo("admin@smartcity.local", "Admin@123")}
-                className="px-2.5 py-2.5 rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center gap-1 shadow-xs"
+                className="px-2 py-2 sm:py-2.5 min-h-[44px] rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
               >
                 <Shield className="w-4 h-4 text-purple-600" />
                 <span>Admin</span>
@@ -93,7 +93,7 @@ export const Login = () => {
               <button
                 type="button"
                 onClick={() => fillDemo("staff@smartcity.local", "Staff@123")}
-                className="px-2.5 py-2.5 rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center gap-1 shadow-xs"
+                className="px-2 py-2 sm:py-2.5 min-h-[44px] rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
               >
                 <Briefcase className="w-4 h-4 text-amber-600" />
                 <span>Staff</span>
@@ -101,7 +101,7 @@ export const Login = () => {
               <button
                 type="button"
                 onClick={() => fillDemo("citizen@smartcity.local", "Citizen@123")}
-                className="px-2.5 py-2.5 rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center gap-1 shadow-xs"
+                className="px-2 py-2 sm:py-2.5 min-h-[44px] rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
               >
                 <User className="w-4 h-4 text-blue-600" />
                 <span>Citizen</span>

@@ -38,7 +38,7 @@ export const AdminAnalytics = () => {
   const resolutionRate = total > 0 ? Math.round((resolved / total) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -46,15 +46,15 @@ export const AdminAnalytics = () => {
 
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900">
               Municipal Grievance Analytics
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Data aggregates directly computed from live MongoDB Atlas records
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
             <StatCard
               title="Resolution Rate"
               value={`${resolutionRate}%`}
@@ -120,15 +120,15 @@ export const AdminAnalytics = () => {
           </div>
 
           {/* Priority Distribution */}
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-4">
-            <h3 className="text-lg font-bold text-slate-900">
+          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-slate-200/80 shadow-sm space-y-4">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900">
               Urgency & Priority Classification Distribution
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
               {data.priorityData.map((p) => (
-                <div key={p.name} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-                  <span className="text-xs uppercase font-bold text-slate-400">{p.name}</span>
-                  <p className="text-2xl font-black text-slate-900 mt-1">{p.value}</p>
+                <div key={p.name} className="p-3 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                  <span className="text-[10px] sm:text-xs uppercase font-bold text-slate-400">{p.name}</span>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 mt-1">{p.value}</p>
                 </div>
               ))}
             </div>

@@ -173,7 +173,7 @@ export const AdminDashboard = () => {
           )}
 
           {/* 4 STAT CARDS MATCHING REFERENCE DESIGN */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
             <StatCard
               title="Total Complaints"
               value={data?.stats?.total ?? 0}
@@ -210,14 +210,14 @@ export const AdminDashboard = () => {
           {/* CHARTS ROW MATCHING REFERENCE DESIGN: Complaints Trend (Line) + Category Distribution (Donut) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Complaints Trend Card (7 cols) */}
-            <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex flex-col justify-between">
-              <div className="flex items-center justify-between mb-4">
+            <div className="lg:col-span-7 bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                 <div>
                   <h3 className="text-sm font-bold text-slate-900">Complaints Trend</h3>
                   <p className="text-[11px] text-slate-400">Weekly submission vs resolution flow</p>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs">
+                <div className="flex items-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
                     <span className="text-slate-600 font-medium">Submitted</span>
@@ -230,8 +230,8 @@ export const AdminDashboard = () => {
               </div>
 
               {/* Clean SVG Trend Chart matching reference design */}
-              <div className="w-full h-56 pt-2">
-                <svg viewBox="0 0 500 200" className="w-full h-full overflow-visible">
+              <div className="w-full h-56 pt-2 overflow-x-auto">
+                <svg viewBox="0 0 500 200" className="w-full h-full min-w-[280px] overflow-visible">
                   {/* Grid lines */}
                   <line x1="40" y1="20" x2="480" y2="20" stroke="#F1F5F9" strokeWidth="1" />
                   <line x1="40" y1="60" x2="480" y2="60" stroke="#F1F5F9" strokeWidth="1" />

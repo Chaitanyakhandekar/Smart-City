@@ -106,7 +106,7 @@ export const AdminStaff = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -115,16 +115,16 @@ export const AdminStaff = () => {
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900">
                 Staff Management & Directory
               </h1>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
                 Configure municipal department teams, monitor workloads, and provision field credentials
               </p>
             </div>
             <button
               onClick={() => setShowAddModal(true)}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm hover:shadow flex items-center gap-2 transition-all"
+              className="px-4 sm:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm hover:shadow flex items-center gap-2 transition-all whitespace-nowrap"
             >
               <UserPlus className="w-4 h-4" /> Add Field Officer
             </button>

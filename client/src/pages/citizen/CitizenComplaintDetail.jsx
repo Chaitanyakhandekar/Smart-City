@@ -382,7 +382,7 @@ export const CitizenComplaintDetail = () => {
       {/* REOPEN MODAL */}
       {showReopenModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95 max-h-[90dvh] overflow-y-auto">
             <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mb-4">
               <RotateCcw className="w-6 h-6" />
             </div>

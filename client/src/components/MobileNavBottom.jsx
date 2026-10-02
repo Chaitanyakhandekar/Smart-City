@@ -85,14 +85,13 @@ export const MobileNavBottom = () => {
         )}
 
         <nav
-          className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
+          className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
           aria-label="Mobile Navigation"
         >
           <NavLink
             to="/admin/dashboard"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -103,8 +102,7 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/complaints"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -115,8 +113,7 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/staff"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -127,8 +124,7 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/analytics"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -152,14 +148,13 @@ export const MobileNavBottom = () => {
   if (role === "STAFF") {
     return (
       <nav
-        className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
+        className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
         aria-label="Mobile Navigation"
       >
         <NavLink
           to="/staff/dashboard"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
@@ -170,8 +165,7 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/tasks"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
@@ -182,8 +176,7 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/notifications"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
@@ -194,8 +187,7 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/profile"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
@@ -209,14 +201,13 @@ export const MobileNavBottom = () => {
   // CITIZEN ROLE
   return (
     <nav
-      className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
+      className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
       aria-label="Mobile Navigation"
     >
       <NavLink
         to="/citizen/dashboard"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >
@@ -227,8 +218,7 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/complaints"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >
@@ -249,8 +239,7 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/notifications"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >
@@ -261,8 +250,7 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/profile"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >
@@ -273,4 +261,4 @@ export const MobileNavBottom = () => {
   );
 };
 
-export default MobileNavBottom;
+export default MobileNavBottom;

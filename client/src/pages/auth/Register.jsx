@@ -66,12 +66,12 @@ export const Register = () => {
         <div className="max-w-md w-full">
           <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center mb-3">
-              <SmartCityLogo className="h-10 w-10 text-blue-600" />
+              <SmartCityLogo size="lg" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
               Citizen Registration
             </h2>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Join your municipal community to report and track local resolutions
             </p>
           </div>

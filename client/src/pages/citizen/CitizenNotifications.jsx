@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
+import MobileNavBottom from "../../components/MobileNavBottom";
 import ChatbotWidget from "../../components/ChatbotWidget";
 import { notificationApi } from "../../api/client";
 import { Bell, Check, Clock, ArrowRight, Loader2 } from "lucide-react";
@@ -54,7 +55,7 @@ export const CitizenNotifications = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -139,6 +140,7 @@ export const CitizenNotifications = () => {
       </div>
 
       <ChatbotWidget />
+      <MobileNavBottom />
     </div>
   );
 };

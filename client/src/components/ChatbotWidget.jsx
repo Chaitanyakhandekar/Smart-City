@@ -164,10 +164,10 @@ export const ChatbotWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-20 md:bottom-6 right-3 sm:right-6 z-50">
       {/* Chat Window */}
       {isOpen ? (
-        <div className="w-[360px] sm:w-[400px] h-[540px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-6">
+        <div className="w-[calc(100vw-24px)] sm:w-[400px] max-w-[400px] h-[min(540px,calc(100dvh-110px))] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-6">
           {/* Header */}
           <div className="bg-[#0F172A] text-white p-4 flex items-center justify-between border-b border-slate-800 shadow-sm">
             <div className="flex items-center gap-3">
@@ -278,15 +278,15 @@ export const ChatbotWidget = () => {
         /* Floating Button */
         <button
           onClick={() => setIsOpen(true)}
-          className="flex items-center gap-2.5 px-4 py-3 bg-[#0F172A] hover:bg-slate-800 text-white font-semibold text-sm rounded-full shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-slate-700/60 group"
+          className="flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#0F172A] hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm rounded-full shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-slate-700/60 group"
           aria-label="Open Smart City Assistant"
           id="chatbot-open-btn"
         >
           <div className="relative">
-            <MessageSquare className="w-5 h-5 text-blue-400" />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-blue-500 rounded-full animate-ping"></span>
+            <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+            <span className="absolute -top-1 -right-1 w-2 sm:w-2.5 h-2 sm:h-2.5 bg-blue-500 rounded-full animate-ping"></span>
           </div>
-          <span className="tracking-tight">Smart City Assistant</span>
+          <span className="tracking-tight whitespace-nowrap">Smart Assistant</span>
         </button>
       )}
     </div>
