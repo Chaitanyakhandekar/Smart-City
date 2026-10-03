@@ -62,7 +62,12 @@ export function getNotificationPermission() {
 }
 
 /**
- * Register the Service Worker (if not already registered)
+ * Register the Service Worker.
+ *
+ * Uses navigator.serviceWorker.ready to ensure we always return
+ * the ACTIVE (controlling) registration — not just any registered one.
+ * This is critical: the push subscription MUST belong to the same
+ * registration that handles push events in sw.js.
  */
 export async function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) {
@@ -70,8 +75,20 @@ export async function registerServiceWorker() {
   }
 
   try {
-    const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
-    await navigator.serviceWorker.ready;
+    // Register our service worker (no-op if already registered at this URL)
+    await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+
+    // Always resolve with the READY (active) registration.
+    // navigator.serviceWorker.ready waits until a service worker is
+    // active and controlling the page — this is the same registration
+    // that will receive push events.
+    const registration = await navigator.serviceWorker.ready;
+
+    console.log(
+      "[PushService] Service Worker ready, scope:",
+      registration.scope
+    );
+
     return registration;
   } catch (error) {
     console.error("[PushService] Service Worker registration failed:", error);
@@ -80,7 +97,9 @@ export async function registerServiceWorker() {
 }
 
 /**
- * Check if there is currently an active push subscription
+ * Check if there is currently an active push subscription.
+ * Always reads from navigator.serviceWorker.ready so the result
+ * belongs to the correct (active) registration.
  */
 export async function getActiveSubscription() {
   if (!isPushSupported()) return null;
@@ -94,14 +113,19 @@ export async function getActiveSubscription() {
 }
 
 /**
- * Subscribe user to Web Push
+ * Subscribe user to Web Push.
+ *
+ * Key invariant: pushManager.subscribe() is called on the SAME
+ * registration that sw.js is active in. Using navigator.serviceWorker.ready
+ * guarantees this — it returns the controlling registration, which is the
+ * one that will receive future push events.
  */
 export async function subscribeToPushNotifications(customDeviceName = null) {
   if (!isPushSupported()) {
     throw new Error("Push notifications are not supported by your browser");
   }
 
-  // 1. Request permission
+  // 1. Request permission FIRST (must be done from a user gesture context)
   const permission = await Notification.requestPermission();
   if (permission !== "granted") {
     throw new Error(
@@ -111,17 +135,18 @@ export async function subscribeToPushNotifications(customDeviceName = null) {
     );
   }
 
-  // 2. Ensure Service Worker is registered
+  // 2. Register SW and wait for it to be active
+  //    This ensures the SAME SW registration handles push events.
   const registration = await registerServiceWorker();
 
-  // 3. Obtain VAPID public key
+  // 3. Obtain VAPID public key (env var preferred; fallback to API)
   let vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
   if (!vapidPublicKey) {
     try {
       const res = await notificationApi.getVapidPublicKey();
       vapidPublicKey = res.data?.data?.vapidPublicKey;
     } catch (err) {
-      console.error("[PushService] Failed to fetch VAPID public key from backend:", err);
+      console.error("[PushService] Failed to fetch VAPID public key:", err);
     }
   }
 
@@ -129,20 +154,26 @@ export async function subscribeToPushNotifications(customDeviceName = null) {
     throw new Error("VAPID public key not configured on server or client");
   }
 
-  const convertedKey = urlBase64ToUint8Array(vapidPublicKey);
+  const applicationServerKey = urlBase64ToUint8Array(vapidPublicKey);
 
-  // 4. Check existing subscription or create new
+  // 4. Get existing subscription or create a fresh one
+  //    Always use the same `registration` from navigator.serviceWorker.ready
   let subscription = await registration.pushManager.getSubscription();
   if (!subscription) {
+    console.log("[PushService] No existing subscription — creating new one");
     subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: convertedKey
+      applicationServerKey
     });
+    console.log("[PushService] New push subscription created:", subscription.endpoint.slice(0, 60) + "...");
+  } else {
+    console.log("[PushService] Reusing existing push subscription:", subscription.endpoint.slice(0, 60) + "...");
   }
 
-  // 5. Send subscription to server
+  // 5. Send subscription details to backend for storage
   const deviceName = customDeviceName || getFriendlyDeviceName();
   await notificationApi.pushSubscribe(subscription, deviceName);
+  console.log("[PushService] Push subscription saved to backend for device:", deviceName);
 
   return subscription;
 }
@@ -159,12 +190,15 @@ export async function unsubscribeFromPushNotifications() {
 
     if (subscription) {
       const endpoint = subscription.endpoint;
-      // Unsubscribe locally in browser
-      await subscription.unsubscribe();
 
-      // Tell backend to delete from DB
+      // Unsubscribe locally in browser first
+      await subscription.unsubscribe();
+      console.log("[PushService] Browser unsubscribed from push");
+
+      // Then tell backend to remove from DB
       try {
         await notificationApi.pushUnsubscribe(endpoint);
+        console.log("[PushService] Backend subscription removed");
       } catch (err) {
         console.warn("[PushService] Backend push unsubscribe failed:", err);
       }
@@ -174,5 +208,24 @@ export async function unsubscribeFromPushNotifications() {
   } catch (error) {
     console.error("[PushService] Failed to unsubscribe from push:", error);
     throw error;
+  }
+}
+
+/**
+ * Early SW registration — call this on app startup so the SW is
+ * active before the user ever touches push settings.
+ * Runs silently in the background; does NOT request permission.
+ */
+export async function earlyRegisterServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  try {
+    await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    // Don't await .ready here — this is fire-and-forget
+    navigator.serviceWorker.ready.then((reg) => {
+      console.log("[PushService] SW active and controlling, scope:", reg.scope);
+    });
+  } catch (err) {
+    // Non-fatal — just log
+    console.warn("[PushService] Early SW registration failed:", err.message);
   }
 }

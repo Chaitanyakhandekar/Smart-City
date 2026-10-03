@@ -129,53 +129,82 @@ function emitSocketNotification(userId, notification) {
  */
 async function sendPushNotification(userId, payload) {
   if (!vapidPublicKey) {
-    return; // Web Push not configured
+    console.warn("[WebPush] VAPID keys not configured — skipping push");
+    return;
   }
 
   try {
     const cleanUserId = normalizeUserId(userId);
     const subscriptions = await PushSubscription.find({ user: cleanUserId });
-    if (subscriptions.length === 0) return;
 
+    if (subscriptions.length === 0) {
+      console.log(`[WebPush] No push subscriptions found for user ${cleanUserId} — skipping push`);
+      return;
+    }
+
+    console.log(`[WebPush] Sending push to ${subscriptions.length} device(s) for user ${cleanUserId}`);
+    console.log(`[WebPush] Payload: title="${payload.title}" type=${payload.type} url=${payload.url}`);
+
+    // Build the JSON payload that the Service Worker will parse.
+    // Structure MUST match what sw.js reads:
+    //   top-level: title, body, icon, badge
+    //   nested data: { notificationId, complaintId, type, url }
     const pushPayload = JSON.stringify({
-      title: payload.title,
-      body: payload.body,
-      icon: "/favicon.png",
-      badge: "/favicon.png",
+      title:  payload.title,
+      body:   payload.body,
+      // Use small optimized icons — favicon.png is 1.2 MB and is silently
+      // rejected by Chrome on Android when used as a push notification icon.
+      icon:  "/icon-192.png",
+      badge: "/badge-72.png",
+      // Nested data object — read in SW as payload.data.*
       data: {
-        notificationId: payload.notificationId,
-        complaintId: payload.complaintId,
-        type: payload.type,
-        url: payload.url || "/"
+        notificationId: payload.notificationId || null,
+        complaintId:    payload.complaintId    || null,
+        type:           payload.type           || "SYSTEM",
+        url:            payload.url            || "/"
       }
     });
 
+    // Web Push options:
+    //   TTL: 86400s (24 hours) — how long FCM stores message if device offline
+    //   urgency: 'high' — bypasses Android Doze/battery-saver delays when
+    //                      phone is locked or screen is off. Without this,
+    //                      Doze can batch push delivery by hours.
+    const webPushOptions = {
+      TTL: 86400,
+      urgency: 'high'
+    };
+
     const sendPromises = subscriptions.map(async (sub) => {
       try {
+        console.log(`[WebPush] → Sending to endpoint: ${sub.endpoint.slice(0, 60)}... (device: ${sub.deviceName || 'unknown'})`);
         await webpush.sendNotification(
           {
             endpoint: sub.endpoint,
             keys: {
               p256dh: sub.keys.p256dh,
-              auth: sub.keys.auth
+              auth:   sub.keys.auth
             }
           },
-          pushPayload
+          pushPayload,
+          webPushOptions
         );
+        console.log(`[WebPush] ✓ Push sent successfully to device: ${sub.deviceName || sub._id}`);
       } catch (err) {
-        // If subscription has expired or is invalid (410 Gone or 404 Not Found), delete it
+        // 410 Gone or 404 = subscription expired/invalid (user uninstalled app)
         if (err.statusCode === 410 || err.statusCode === 404) {
-          console.log(`[NotificationService] Removing expired push subscription for user ${cleanUserId}`);
+          console.log(`[WebPush] Subscription expired (${err.statusCode}), removing: ${sub._id}`);
           await PushSubscription.deleteOne({ _id: sub._id });
         } else {
-          console.warn(`[NotificationService] WebPush send error for endpoint:`, err.message);
+          console.error(`[WebPush] ✗ Send failed for device ${sub.deviceName || sub._id}:`, err.statusCode, err.message);
         }
       }
     });
 
     await Promise.allSettled(sendPromises);
+    console.log(`[WebPush] Push dispatch complete for user ${cleanUserId}`);
   } catch (error) {
-    console.warn("[NotificationService] Push dispatch failed:", error.message);
+    console.error("[WebPush] Push dispatch failed:", error.message);
   }
 }
 
