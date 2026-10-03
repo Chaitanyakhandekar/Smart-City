@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/authContex";
-import { notificationApi } from "../api/client";
+import { useNotification } from "../context/notificationContext";
 import SmartCityLogo from "./SmartCityLogo";
 import {
   Bell,
@@ -21,36 +21,20 @@ dayjs.extend(relativeTime);
 
 export const Navbar = ({ onToggleSidebar }) => {
   const { user, role, logout } = useAuth();
+  const {
+    notifications,
+    unreadCount,
+    markAsRead,
+    markAllAsRead
+  } = useNotification();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [notifications, setNotifications] = useState([]);
-  const [unreadCount, setUnreadCount] = useState(0);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const notifRef = useRef(null);
   const userRef = useRef(null);
-
-  // Fetch notifications periodically or on mount
-  const fetchNotifications = async () => {
-    if (!user) return;
-    try {
-      const res = await notificationApi.getMyNotifications();
-      if (res.data?.data) {
-        setNotifications(res.data.data.notifications || []);
-        setUnreadCount(res.data.data.unreadCount || 0);
-      }
-    } catch (err) {
-      console.warn("Failed to fetch notifications:", err.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotifications();
-    const interval = setInterval(fetchNotifications, 15000);
-    return () => clearInterval(interval);
-  }, [user]);
 
   // Click outside listener
   useEffect(() => {
@@ -67,20 +51,13 @@ export const Navbar = ({ onToggleSidebar }) => {
   }, []);
 
   const handleMarkAllRead = async () => {
-    try {
-      await notificationApi.markAllAsRead();
-      setUnreadCount(0);
-      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
-    } catch (err) {
-      console.error(err);
-    }
+    await markAllAsRead();
   };
 
   const handleNotificationClick = async (notif) => {
     try {
       if (!notif.isRead) {
-        await notificationApi.markAsRead(notif._id);
-        setUnreadCount((prev) => Math.max(0, prev - 1));
+        await markAsRead(notif._id);
       }
       setShowNotifications(false);
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContex";
+import { useNotification } from "../context/notificationContext";
 import {
   Home,
   FileText,
@@ -17,6 +18,7 @@ import {
 
 export const MobileNavBottom = () => {
   const { user, role, logout } = useAuth();
+  const { unreadCount } = useNotification();
   const navigate = useNavigate();
   const [showMore, setShowMore] = useState(false);
 
@@ -60,9 +62,16 @@ export const MobileNavBottom = () => {
                 <NavLink
                   to="/admin/notifications"
                   onClick={() => setShowMore(false)}
-                  className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-700"
+                  className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 flex items-center justify-between font-semibold text-slate-700 hover:text-blue-700"
                 >
-                  <Bell className="w-4 h-4 text-blue-600" /> Notifications
+                  <div className="flex items-center gap-2">
+                    <Bell className="w-4 h-4 text-blue-600" /> Notifications
+                  </div>
+                  {unreadCount > 0 && (
+                    <span className="px-1.5 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-bold">
+                      {unreadCount > 9 ? "9+" : unreadCount}
+                    </span>
+                  )}
                 </NavLink>
                 <NavLink
                   to="/admin/profile"
@@ -91,7 +100,8 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/dashboard"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -102,7 +112,8 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/complaints"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -113,7 +124,8 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/staff"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -124,7 +136,8 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/analytics"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
               }`
             }
           >
@@ -137,7 +150,12 @@ export const MobileNavBottom = () => {
             onClick={() => setShowMore(true)}
             className="flex flex-col items-center justify-center flex-1 py-1 text-slate-500 hover:text-slate-900 font-medium transition-colors"
           >
-            <MoreHorizontal className="w-5 h-5 mb-0.5" />
+            <div className="relative">
+              <MoreHorizontal className="w-5 h-5 mb-0.5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-rose-600 ring-2 ring-white" />
+              )}
+            </div>
             <span className="text-[10px] tracking-tight">More</span>
           </button>
         </nav>
@@ -154,7 +172,8 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/dashboard"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
@@ -165,7 +184,8 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/tasks"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
@@ -176,18 +196,27 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/notifications"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
-          <Bell className="w-5 h-5 mb-0.5" />
+          <div className="relative">
+            <Bell className="w-5 h-5 mb-0.5" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1.5 -right-2.5 min-w-4 h-4 px-1 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
+          </div>
           <span className="text-[10px] tracking-tight">Alerts</span>
         </NavLink>
 
         <NavLink
           to="/staff/profile"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
             }`
           }
         >
@@ -207,7 +236,8 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/dashboard"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >
@@ -218,7 +248,8 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/complaints"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >
@@ -239,18 +270,27 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/notifications"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >
-        <Bell className="w-5 h-5 mb-0.5" />
+        <div className="relative">
+          <Bell className="w-5 h-5 mb-0.5" />
+          {unreadCount > 0 && (
+            <span className="absolute -top-1.5 -right-2.5 min-w-4 h-4 px-1 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
+          )}
+        </div>
         <span className="text-[10px] tracking-tight">Alerts</span>
       </NavLink>
 
       <NavLink
         to="/citizen/profile"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
           }`
         }
       >

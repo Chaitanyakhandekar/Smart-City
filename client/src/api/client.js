@@ -108,9 +108,15 @@ export const adminApi = {
 };
 
 export const notificationApi = {
-  getMyNotifications: () => api.get("/notifications"),
+  getMyNotifications: (params) => api.get("/notifications", { params }),
+  getUnreadCount: () => api.get("/notifications/unread-count"),
   markAsRead: (id) => api.patch(`/notifications/${id}/read`),
-  markAllAsRead: () => api.patch("/notifications/read-all")
+  markAllAsRead: () => api.patch("/notifications/read-all"),
+  getVapidPublicKey: () => api.get("/notifications/vapid-public-key"),
+  pushSubscribe: (subscription, deviceName) =>
+    api.post("/notifications/push/subscribe", { subscription, deviceName }),
+  pushUnsubscribe: (endpoint) =>
+    api.delete("/notifications/push/unsubscribe", { data: { endpoint } })
 };
 
 export const chatApi = {
