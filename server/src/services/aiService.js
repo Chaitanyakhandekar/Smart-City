@@ -130,10 +130,59 @@ export function getFallbackClassification(description = "", filename = "") {
   };
 }
 
+const AI_SERVICE_URL = process.env.AI_SERVICE_URL || "http://localhost:8000";
+
+/**
+ * Queries the dedicated Python AI Microservice (ai/) if running.
+ */
+async function queryMicroserviceAI(imagePath, description) {
+  try {
+    const formData = new FormData();
+    formData.append("description", description || "");
+
+    if (imagePath && fs.existsSync(imagePath)) {
+      const buffer = fs.readFileSync(imagePath);
+      const filename = path.basename(imagePath);
+      formData.append("image", new Blob([buffer]), filename);
+    }
+
+    const response = await fetch(`${AI_SERVICE_URL}/analyze`, {
+      method: "POST",
+      body: formData,
+      signal: AbortSignal.timeout(3500),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        category: data.category || "Other",
+        subcategory: data.subcategory || "General Issue",
+        priority: data.priority || "MEDIUM",
+        confidence: typeof data.confidence === "number" ? data.confidence : 0.85,
+        reason: data.reason || "",
+        department: data.department || "",
+        isFallback: Boolean(data.isFallback),
+        source: data.source || "ai-microservice",
+        serviceStatus: `AI Microservice connected (${data.source || "local"})`,
+      };
+    }
+  } catch {
+    // Microservice offline; proceed smoothly to Gemini or rule-based fallback
+  }
+  return null;
+}
+
 export async function analyzeComplaintImageAndText({
   imagePath,
   description = "",
 }) {
+  // 1. Try Python AI Microservice first
+  const microserviceResult = await queryMicroserviceAI(imagePath, description);
+  if (microserviceResult) {
+    return microserviceResult;
+  }
+
+  // 2. Direct Gemini fallback
   if (!process.env.GEMINI_API_KEY) {
     console.warn("[Gemini AI] No GEMINI_API_KEY configured. Using intelligent fallback.");
     return getFallbackClassification(
