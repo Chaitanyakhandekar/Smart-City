@@ -150,9 +150,9 @@ export const AdminComplaintDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+      <div className="min-h-screen bg-[#070B14] flex flex-col font-sans">
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        <div className="flex-1 flex items-center justify-center text-blue-600">
+        <div className="flex-1 flex items-center justify-center text-teal-400">
           <Loader2 className="w-8 h-8 animate-spin" />
         </div>
       </div>
@@ -161,11 +161,11 @@ export const AdminComplaintDetail = () => {
 
   if (!complaintData) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+      <div className="min-h-screen bg-[#070B14] flex flex-col font-sans">
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
         <div className="flex-1 flex flex-col items-center justify-center p-4">
-          <p className="text-slate-600 font-semibold">Complaint record not found.</p>
-          <Link to="/admin/complaints" className="mt-2 text-blue-600 hover:underline text-xs font-semibold">
+          <p className="text-slate-300 font-semibold">Complaint record not found.</p>
+          <Link to="/admin/complaints" className="mt-2 text-teal-400 hover:underline text-xs font-semibold">
             Back to master table
           </Link>
         </div>
@@ -186,7 +186,7 @@ export const AdminComplaintDetail = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans text-slate-800 pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#070B14] flex flex-col font-sans text-slate-200 pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -196,7 +196,7 @@ export const AdminComplaintDetail = () => {
           <div className="flex items-center justify-between">
             <Link
               to="/admin/complaints"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" /> Back to Master Directory
             </Link>
@@ -206,10 +206,10 @@ export const AdminComplaintDetail = () => {
           </div>
 
           {/* MAIN RECORD HEADER */}
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs space-y-4">
+          <div className="bg-[#0F172A] rounded-3xl p-6 sm:p-8 border border-slate-800/80 shadow-xl space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-extrabold text-blue-800 bg-blue-50 px-3 py-1 rounded-lg border border-blue-200">
+                <span className="font-mono text-sm font-extrabold text-teal-300 bg-teal-500/10 px-3 py-1 rounded-lg border border-teal-500/30">
                   #{complaint.complaintNumber}
                 </span>
                 <StatusBadge status={complaint.status} />
@@ -219,7 +219,7 @@ export const AdminComplaintDetail = () => {
                 {complaint.status !== "REJECTED" && (
                   <button
                     onClick={() => setShowRejectModal(true)}
-                    className="px-3 py-1 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-semibold transition-colors"
+                    className="px-3 py-1 rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 text-xs font-semibold transition-colors"
                   >
                     Reject Issue
                   </button>
@@ -227,44 +227,44 @@ export const AdminComplaintDetail = () => {
               </div>
             </div>
 
-            <h1 className="text-2xl font-bold text-slate-900">{complaint.title}</h1>
-            <p className="text-sm text-slate-600 leading-relaxed">{complaint.description}</p>
+            <h1 className="text-2xl font-bold text-white">{complaint.title}</h1>
+            <p className="text-sm text-slate-300 leading-relaxed">{complaint.description}</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800/80 text-xs">
               <div className="flex items-center gap-2.5">
-                <MapPin className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-sky-400 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-slate-700">Location Address</p>
-                  <p className="text-slate-500">{complaint.locationAddress}</p>
+                  <p className="font-semibold text-slate-300">Location Address</p>
+                  <p className="text-slate-400">{complaint.locationAddress}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5">
-                <User className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                <User className="w-4 h-4 text-teal-400 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-slate-700">Reporting Citizen</p>
-                  <p className="text-slate-500">{complaint.citizen?.name} ({complaint.citizen?.email})</p>
+                  <p className="font-semibold text-slate-300">Reporting Citizen</p>
+                  <p className="text-slate-400">{complaint.citizen?.name} ({complaint.citizen?.email})</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-indigo-600 flex-shrink-0" />
+                <Phone className="w-4 h-4 text-purple-400 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-slate-700">Citizen Contact</p>
-                  <p className="text-slate-500">{complaint.citizen?.phone || "No phone on file"}</p>
+                  <p className="font-semibold text-slate-300">Citizen Contact</p>
+                  <p className="text-slate-400">{complaint.citizen?.phone || "No phone on file"}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* AI CLASSIFICATION REVIEW & MANUAL OVERRIDE SECTION */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs space-y-5">
+          <div className="bg-[#0F172A] rounded-3xl p-6 sm:p-7 border border-slate-800/80 shadow-xl space-y-5">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
-                <Cpu className="w-4 h-4 text-blue-600" />
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200">
+                <Cpu className="w-4 h-4 text-cyan-400" />
                 AI Vision Prediction & Intelligent Recommendation
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-blue-700 border border-blue-200">
+              <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
                 Confidence: {confidencePct !== null ? `${confidencePct}%` : "Pending AI Analysis"}
               </span>
             </div>
@@ -272,9 +272,9 @@ export const AdminComplaintDetail = () => {
             {/* Confidence Progress Bar */}
             {confidencePct !== null ? (
               <div className="space-y-1">
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-blue-600 rounded-full transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-400 rounded-full transition-all duration-500"
                     style={{ width: `${confidencePct}%` }}
                   ></div>
                 </div>
@@ -289,42 +289,42 @@ export const AdminComplaintDetail = () => {
             )}
 
             {/* AI SUGGESTION TILES */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-[#070B14] border border-slate-800 text-xs">
               <div>
                 <p className="text-slate-400 font-semibold uppercase text-[10px]">AI Category</p>
-                <p className="font-bold text-slate-900 mt-0.5">{complaint.aiCategory || "Pending AI Analysis"}</p>
+                <p className="font-bold text-slate-100 mt-0.5">{complaint.aiCategory || "Pending AI Analysis"}</p>
               </div>
               <div>
                 <p className="text-slate-400 font-semibold uppercase text-[10px]">AI Subcategory</p>
-                <p className="font-bold text-slate-900 mt-0.5">{complaint.aiSubcategory || (complaint.aiCategory ? "General Issue" : "Pending AI Analysis")}</p>
+                <p className="font-bold text-slate-100 mt-0.5">{complaint.aiSubcategory || (complaint.aiCategory ? "General Issue" : "Pending AI Analysis")}</p>
               </div>
               <div>
                 <p className="text-slate-400 font-semibold uppercase text-[10px]">Suggested Urgency</p>
-                <p className="font-bold text-amber-600 mt-0.5">{complaint.aiPriority || "Pending AI Analysis"}</p>
+                <p className="font-bold text-amber-400 mt-0.5">{complaint.aiPriority || "Pending AI Analysis"}</p>
               </div>
               <div>
                 <p className="text-slate-400 font-semibold uppercase text-[10px]">Status</p>
-                <p className="font-bold text-emerald-600 mt-0.5">
+                <p className="font-bold text-emerald-400 mt-0.5">
                   {complaint.aiCategory ? "AI Classified" : "Pending AI Analysis"}
                 </p>
               </div>
             </div>
 
             {/* ADMIN OVERRIDE CONTROLS */}
-            <div className="p-5 rounded-2xl border border-slate-200/80 bg-white space-y-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+            <div className="p-5 rounded-2xl border border-slate-800/80 bg-[#0B1120] space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
                 Administrative Classification Override
               </h4>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">
+                  <label className="block text-xs font-semibold text-slate-400 mb-1">
                     Final Category
                   </label>
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                    className="w-full px-3 py-2 bg-[#070B14] border border-slate-700 text-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-teal-500"
                   >
                     {MUNICIPAL_CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -335,13 +335,13 @@ export const AdminComplaintDetail = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">
+                  <label className="block text-xs font-semibold text-slate-400 mb-1">
                     Final Priority
                   </label>
                   <select
                     value={selectedPriority}
                     onChange={(e) => setSelectedPriority(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                    className="w-full px-3 py-2 bg-[#070B14] border border-slate-700 text-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-teal-500"
                   >
                     <option value="LOW">LOW</option>
                     <option value="MEDIUM">MEDIUM</option>
@@ -356,7 +356,7 @@ export const AdminComplaintDetail = () => {
                   type="button"
                   onClick={handleUpdateClassification}
                   disabled={actionLoading}
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5"
                 >
                   <Save className="w-3.5 h-3.5" /> Save Final Classification
                 </button>
@@ -365,29 +365,29 @@ export const AdminComplaintDetail = () => {
           </div>
 
           {/* STAFF ASSIGNMENT / DISPATCH SECTION */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+          <div className="bg-[#0F172A] rounded-3xl p-6 border border-slate-800/80 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
-                <UserCheck className="w-4 h-4 text-blue-600" />
+              <div className="flex items-center gap-2 text-sm font-bold text-white">
+                <UserCheck className="w-4 h-4 text-amber-400" />
                 Assign or Reassign Municipal Field Officer
               </div>
               {complaint.assignedStaff && (
-                <span className="text-xs text-slate-500">
-                  Currently Assigned: <span className="font-bold text-slate-800">{complaint.assignedStaff.name}</span>
+                <span className="text-xs text-slate-400">
+                  Currently Assigned: <span className="font-bold text-amber-300">{complaint.assignedStaff.name}</span>
                 </span>
               )}
             </div>
 
             <form onSubmit={handleAssignStaff} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1">
+                <label className="block text-xs font-semibold text-slate-400 mb-1">
                   Select Field Staff Member *
                 </label>
                 <select
                   required
                   value={selectedStaffId}
                   onChange={(e) => setSelectedStaffId(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full px-3 py-2.5 bg-[#070B14] border border-slate-700 text-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-teal-500"
                 >
                   <option value="">-- Choose Field Officer --</option>
                   {matchingDeptStaff.length > 0 && (
@@ -412,7 +412,7 @@ export const AdminComplaintDetail = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1">
+                <label className="block text-xs font-semibold text-slate-400 mb-1">
                   Dispatch Instructions / Remarks (Optional)
                 </label>
                 <input
@@ -420,7 +420,7 @@ export const AdminComplaintDetail = () => {
                   value={assignmentNote}
                   onChange={(e) => setAssignmentNote(e.target.value)}
                   placeholder="e.g. Priority repair needed before Monday morning peak traffic..."
-                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full px-3.5 py-2 bg-[#070B14] border border-slate-700 text-slate-200 placeholder-slate-500 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-teal-500"
                 />
               </div>
 
@@ -428,7 +428,7 @@ export const AdminComplaintDetail = () => {
                 <button
                   type="submit"
                   disabled={actionLoading || !selectedStaffId}
-                  className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md hover:shadow-lg disabled:opacity-50 flex items-center gap-1.5 transition-all"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white text-xs font-bold shadow-md hover:shadow-lg disabled:opacity-50 flex items-center gap-1.5 transition-all"
                 >
                   <Check className="w-4 h-4" />
                   {complaint.assignedStaff ? "Reassign Officer" : "Dispatch & Assign Staff"}
@@ -438,8 +438,8 @@ export const AdminComplaintDetail = () => {
           </div>
 
           {/* BEFORE / AFTER PHOTO VERIFICATION */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
-            <h3 className="text-base font-bold text-slate-900">
+          <div className="bg-[#0F172A] rounded-3xl p-6 border border-slate-800/80 shadow-xl space-y-4">
+            <h3 className="text-base font-bold text-white">
               Photographic Proofs
             </h3>
             <BeforeAfterComparison
@@ -450,8 +450,8 @@ export const AdminComplaintDetail = () => {
           </div>
 
           {/* TIMELINE */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
-            <h3 className="text-base font-bold text-slate-900">
+          <div className="bg-[#0F172A] rounded-3xl p-6 border border-slate-800/80 shadow-xl space-y-4">
+            <h3 className="text-base font-bold text-white">
               Activity History & Dispatch Audit Log
             </h3>
             <TimelineView updates={timeline} />
@@ -461,13 +461,13 @@ export const AdminComplaintDetail = () => {
 
       {/* REJECT MODAL */}
       {showRejectModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95 max-h-[90dvh] overflow-y-auto">
-            <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mb-4">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#0F172A] border border-slate-800 rounded-3xl p-5 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95 max-h-[90dvh] overflow-y-auto text-slate-200">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/30 flex items-center justify-center mb-4">
               <XCircle className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900">Reject Complaint</h3>
-            <p className="text-xs text-slate-500 mt-1 mb-4">
+            <h3 className="text-lg font-bold text-white">Reject Complaint</h3>
+            <p className="text-xs text-slate-400 mt-1 mb-4">
               Please enter the official reason for rejecting complaint #{complaint.complaintNumber} (e.g. duplicate submission, outside municipal jurisdiction).
             </p>
 
@@ -478,21 +478,21 @@ export const AdminComplaintDetail = () => {
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
                 placeholder="Reason for rejection..."
-                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-rose-500 resize-y"
+                className="w-full p-3 bg-[#070B14] border border-slate-700 text-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-rose-500 resize-y"
               />
 
               <div className="flex items-center justify-end gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowRejectModal(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700"
+                  className="px-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md"
+                  className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-md transition-colors"
                 >
                   Confirm Rejection
                 </button>

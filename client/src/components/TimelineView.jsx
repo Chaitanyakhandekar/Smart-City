@@ -73,7 +73,7 @@ export const TimelineView = ({ updates = [] }) => {
   };
 
   return (
-    <div className="relative pl-7 space-y-6 before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-slate-200">
+    <div className="relative pl-7 space-y-6 before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-slate-800">
       {updates.map((update, idx) => {
         const config = getStepConfig(update.status, update.message);
         const Icon = config.icon;
@@ -82,16 +82,16 @@ export const TimelineView = ({ updates = [] }) => {
           <div key={update._id || idx} className="relative group">
             {/* Step Icon Indicator Node matching reference design */}
             <div
-              className={`absolute -left-7 mt-0.5 w-6 h-6 rounded-full flex items-center justify-center shadow-xs transition-transform group-hover:scale-110 ${config.bg}`}
+              className={`absolute -left-7 mt-0.5 w-6 h-6 rounded-full flex items-center justify-center shadow-md transition-transform group-hover:scale-110 ${config.bg}`}
             >
               <Icon className="w-3.5 h-3.5" />
             </div>
 
             {/* Timeline Item Details */}
-            <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition-shadow space-y-1.5">
+            <div className="bg-[#070B14]/80 p-4 rounded-2xl border border-slate-800/90 shadow-sm hover:border-slate-700 transition-all space-y-1.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-900">
+                  <span className="text-xs font-bold text-slate-100">
                     {config.label}
                   </span>
                   {update.status && <StatusBadge status={update.status} size="sm" />}
@@ -102,13 +102,13 @@ export const TimelineView = ({ updates = [] }) => {
                 </span>
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-300 leading-relaxed">
                 {update.message}
               </p>
 
               {update.user && (
-                <p className="text-[10px] text-slate-400 pt-1 border-t border-slate-50">
-                  Updated by: <span className="font-semibold text-slate-700">{update.user.name}</span> ({update.user.role})
+                <p className="text-[10px] text-slate-400 pt-1.5 border-t border-slate-800/80">
+                  Updated by: <span className="font-semibold text-slate-300">{update.user.name}</span> ({update.user.role})
                 </p>
               )}
             </div>

@@ -52,8 +52,8 @@ export const ImageUploadPreview = ({
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-semibold text-slate-700">
-        {label} {required && <span className="text-rose-500">*</span>}
+      <label className="block text-sm font-semibold text-slate-300">
+        {label} {required && <span className="text-rose-400">*</span>}
       </label>
 
       {!preview ? (
@@ -61,7 +61,7 @@ export const ImageUploadPreview = ({
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-slate-300 hover:border-blue-500 bg-slate-50 hover:bg-blue-50/40 rounded-2xl p-6 text-center cursor-pointer transition-all group"
+          className="border-2 border-dashed border-slate-700 hover:border-teal-500 bg-[#070B14] hover:bg-teal-500/5 rounded-2xl p-6 text-center cursor-pointer transition-all group"
         >
           <input
             ref={fileInputRef}
@@ -70,10 +70,10 @@ export const ImageUploadPreview = ({
             className="hidden"
             onChange={(e) => handleFile(e.target.files[0])}
           />
-          <div className="w-12 h-12 mx-auto rounded-full bg-blue-100 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform mb-3">
+          <div className="w-12 h-12 mx-auto rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/30 flex items-center justify-center group-hover:scale-110 transition-transform mb-3">
             <UploadCloud className="w-6 h-6" />
           </div>
-          <p className="text-sm font-semibold text-slate-700">
+          <p className="text-sm font-semibold text-slate-200">
             Click to upload or drag & drop photo
           </p>
           <p className="text-xs text-slate-400 mt-1">
@@ -81,7 +81,7 @@ export const ImageUploadPreview = ({
           </p>
         </div>
       ) : (
-        <div className="relative border border-slate-200 rounded-2xl overflow-hidden bg-slate-900 aspect-video max-h-64 flex items-center justify-center">
+        <div className="relative border border-slate-800 rounded-2xl overflow-hidden bg-[#070B14] aspect-video max-h-64 flex items-center justify-center">
           <img
             src={preview}
             alt="Upload Preview"

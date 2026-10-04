@@ -59,7 +59,7 @@ export const StaffDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans text-slate-800 pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#070B14] flex flex-col font-sans text-slate-100 pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -67,17 +67,17 @@ export const StaffDashboard = () => {
 
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           {/* Header Banner */}
-          <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 rounded-3xl p-5 sm:p-8 text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="bg-gradient-to-r from-[#0F172A] via-[#1E293B] to-[#0F172A] border border-slate-800 rounded-3xl p-5 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold uppercase tracking-wider text-blue-300">
+                <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
                   Field Operations Console
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-600/40 text-[10px] font-bold text-blue-200 border border-blue-400/30">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-950/40 text-[10px] font-bold text-amber-300 border border-amber-500/30">
                   {user?.department || "Municipal Field Department"}
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold mt-1">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold mt-1 text-white">
                 Officer {user?.name}
               </h1>
               <p className="text-slate-300 text-xs sm:text-sm mt-1.5 max-w-xl">
@@ -89,15 +89,15 @@ export const StaffDashboard = () => {
                 type="button"
                 onClick={() => fetchDashboard(true)}
                 disabled={refreshing}
-                className="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/20 shadow-xs transition-all flex items-center gap-1.5"
+                className="px-3.5 py-2.5 rounded-xl bg-[#070B14] hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 shadow-xs transition-all flex items-center gap-1.5"
                 title="Refresh Tasks"
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
+                <RefreshCw className={`w-3.5 h-3.5 text-teal-400 ${refreshing ? "animate-spin" : ""}`} />
                 {refreshing ? "Refreshing..." : "Refresh"}
               </button>
               <Link
                 to="/staff/tasks"
-                className="px-4 sm:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2 whitespace-nowrap"
+                className="px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-md transition-all flex items-center gap-2 whitespace-nowrap"
               >
                 <CheckSquare className="w-4 h-4" />
                 View Assigned Tasks
@@ -138,33 +138,33 @@ export const StaffDashboard = () => {
           </div>
 
           {/* Urgent Field Assignments */}
-          <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-xs">
+          <div className="bg-[#0F172A]/90 rounded-3xl p-5 sm:p-6 border border-slate-800 shadow-md">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-base font-bold text-slate-900">Urgent Field Assignments</h3>
+                <h3 className="text-base font-bold text-white">Urgent Field Assignments</h3>
                 <p className="text-xs text-slate-400">Tasks requiring inspection or completion photo</p>
               </div>
               <Link
                 to="/staff/tasks"
-                className="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                className="text-xs font-semibold text-teal-400 hover:text-teal-300 flex items-center gap-1"
               >
                 All Tasks <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
             {loading ? (
-              <div className="py-12 flex justify-center text-blue-600">
+              <div className="py-12 flex justify-center text-teal-400">
                 <Loader2 className="w-8 h-8 animate-spin" />
               </div>
             ) : data.recentTasks.length === 0 ? (
-              <div className="py-12 text-center text-slate-400 text-xs">
+              <div className="py-12 text-center text-slate-500 text-xs">
                 No assigned tasks currently pending in your department.
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-slate-100 text-slate-400 uppercase tracking-wider text-[10px]">
+                    <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider text-[10px]">
                       <th className="pb-3 px-3 font-semibold">ID</th>
                       <th className="pb-3 px-3 font-semibold">Title & Category</th>
                       <th className="pb-3 px-3 font-semibold">Location</th>
@@ -173,24 +173,24 @@ export const StaffDashboard = () => {
                       <th className="pb-3 px-3 font-semibold text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-slate-800/80">
                     {data.recentTasks.map((task) => {
                       const isUrgent = task.priority === "CRITICAL" || task.priority === "HIGH";
                       return (
                         <tr
                           key={task._id}
-                          className={`hover:bg-slate-50/80 transition-colors ${
-                            isUrgent ? "bg-rose-50/20" : ""
+                          className={`hover:bg-slate-800/40 transition-colors ${
+                            isUrgent ? "bg-rose-950/20" : ""
                           }`}
                         >
-                          <td className="py-3.5 px-3 font-mono font-bold text-slate-900">
+                          <td className="py-3.5 px-3 font-mono font-bold text-white">
                             #{task.complaintNumber}
                           </td>
                           <td className="py-3.5 px-3">
-                            <p className="font-semibold text-slate-900 line-clamp-1">{task.title}</p>
+                            <p className="font-semibold text-slate-200 line-clamp-1">{task.title}</p>
                             <p className="text-[11px] text-slate-400">{task.category}</p>
                           </td>
-                          <td className="py-3.5 px-3 text-slate-500 max-w-xs truncate">
+                          <td className="py-3.5 px-3 text-slate-400 max-w-xs truncate">
                             {task.locationAddress}
                           </td>
                           <td className="py-3.5 px-3">
@@ -201,8 +201,8 @@ export const StaffDashboard = () => {
                           </td>
                           <td className="py-3.5 px-3 text-right">
                             <Link
-                              to={`/staff/complaints/${task._id}`}
-                              className="px-3 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold text-[11px] transition-colors"
+                              to={`/staff/tasks/${task._id}`}
+                              className="px-3 py-1 rounded-lg bg-[#070B14] hover:bg-teal-950/40 hover:text-teal-300 text-slate-300 border border-slate-800 font-semibold text-[11px] transition-colors"
                             >
                               Inspect & Work
                             </Link>

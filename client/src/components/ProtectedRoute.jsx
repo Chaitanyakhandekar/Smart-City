@@ -9,9 +9,9 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
-        <Loader2 className="w-10 h-10 text-teal-600 animate-spin mb-3" />
-        <p className="text-slate-600 font-medium text-sm">Verifying Smart City credentials...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#070B14]">
+        <Loader2 className="w-10 h-10 text-teal-400 animate-spin mb-3" />
+        <p className="text-slate-300 font-medium text-sm">Verifying Smart City credentials...</p>
       </div>
     );
   }

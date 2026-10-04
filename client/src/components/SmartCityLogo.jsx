@@ -31,8 +31,8 @@ export const SmartCityLogo = ({ variant = "dark", size = "md", to = "/" }) => {
       </div>
 
       <div className="flex flex-col leading-none">
-        <span className={`font-bold tracking-tight ${textSizes[size] || textSizes.md} ${isLight ? "text-white" : "text-slate-900"}`}>
-          Smart<span className="text-blue-600">City</span>
+        <span className={`font-extrabold tracking-tight ${textSizes[size] || textSizes.md} text-white`}>
+          Smart<span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-400">City</span>
         </span>
       </div>
     </div>

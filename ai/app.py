@@ -43,7 +43,7 @@ def health():
         "status": "online",
         "service": "Smart City Civic AI Microservice",
         "version": "1.0.0",
-        "port": int(os.environ.get("PORT", 8000)),
+        "port": int(os.environ.get("AI_PORT", 8000)),
         "capabilities": [
             "multimodal-vision-inspection",
             "civic-taxonomy-classification",
@@ -154,7 +154,7 @@ def analyze():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("AI_PORT", 8000))
     print("=" * 65)
     print(f"Starting Smart City Civic AI Microservice on http://0.0.0.0:{port}")
     print("=" * 65)

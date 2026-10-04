@@ -13,53 +13,53 @@ export const StatusBadge = ({ status, size = "md" }) => {
   const configs = {
     SUBMITTED: {
       label: "Submitted",
-      bg: "bg-amber-50 text-amber-700 border-amber-200/80",
+      bg: "bg-amber-500/15 text-amber-300 border-amber-500/30",
       icon: Clock,
-      dot: "bg-amber-500"
+      dot: "bg-amber-400"
     },
     UNDER_REVIEW: {
       label: "Under Review",
-      bg: "bg-amber-50 text-amber-700 border-amber-200/80",
+      bg: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30",
       icon: Eye,
-      dot: "bg-amber-500"
+      dot: "bg-cyan-400"
     },
     ASSIGNED: {
       label: "Assigned",
-      bg: "bg-blue-50 text-blue-700 border-blue-200/80",
+      bg: "bg-sky-500/15 text-sky-300 border-sky-500/30",
       icon: UserCheck,
-      dot: "bg-blue-500"
+      dot: "bg-sky-400"
     },
     IN_PROGRESS: {
       label: "In Progress",
-      bg: "bg-blue-50 text-blue-700 border-blue-200/80",
+      bg: "bg-teal-500/15 text-teal-300 border-teal-500/30",
       icon: Wrench,
-      dot: "bg-blue-500"
+      dot: "bg-teal-400"
     },
     RESOLVED: {
       label: "Resolved",
-      bg: "bg-emerald-50 text-emerald-700 border-emerald-200/80",
+      bg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
       icon: CheckCircle2,
-      dot: "bg-emerald-500"
+      dot: "bg-emerald-400"
     },
     REOPENED: {
       label: "Reopened",
-      bg: "bg-rose-50 text-rose-700 border-rose-200/80",
+      bg: "bg-rose-500/15 text-rose-300 border-rose-500/30",
       icon: AlertCircle,
-      dot: "bg-rose-500"
+      dot: "bg-rose-400"
     },
     REJECTED: {
       label: "Rejected",
-      bg: "bg-slate-100 text-slate-700 border-slate-200",
+      bg: "bg-slate-800 text-slate-400 border-slate-700",
       icon: XCircle,
-      dot: "bg-slate-400"
+      dot: "bg-slate-500"
     }
   };
 
   const config = configs[status] || {
     label: status || "Unknown",
-    bg: "bg-slate-50 text-slate-700 border-slate-200",
+    bg: "bg-slate-800 text-slate-300 border-slate-700",
     icon: Clock,
-    dot: "bg-slate-400"
+    dot: "bg-slate-500"
   };
 
   const Icon = config.icon;

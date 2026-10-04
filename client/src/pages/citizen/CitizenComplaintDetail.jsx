@@ -104,9 +104,9 @@ export const CitizenComplaintDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+      <div className="min-h-screen bg-[#070B14] flex flex-col font-sans">
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        <div className="flex-1 flex items-center justify-center text-blue-600">
+        <div className="flex-1 flex items-center justify-center text-teal-400">
           <Loader2 className="w-8 h-8 animate-spin" />
         </div>
       </div>
@@ -115,11 +115,11 @@ export const CitizenComplaintDetail = () => {
 
   if (!complaintData) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+      <div className="min-h-screen bg-[#070B14] flex flex-col font-sans">
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
         <div className="flex-1 flex flex-col items-center justify-center p-4">
-          <p className="text-slate-700 font-bold">Complaint record not found.</p>
-          <Link to="/citizen/complaints" className="mt-2 text-blue-600 hover:underline text-xs font-semibold">
+          <p className="text-slate-300 font-bold">Complaint record not found.</p>
+          <Link to="/citizen/complaints" className="mt-2 text-teal-400 hover:underline text-xs font-semibold">
             Return to complaint history
           </Link>
         </div>
@@ -131,7 +131,7 @@ export const CitizenComplaintDetail = () => {
   const beforePhotoUrl = beforeImage ? getImageUrl(beforeImage?.imageUrl || beforeImage) : null;
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans text-slate-800 pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#070B14] flex flex-col font-sans text-slate-100 pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -143,16 +143,16 @@ export const CitizenComplaintDetail = () => {
             <div className="flex items-center gap-3">
               <Link
                 to="/citizen/complaints"
-                className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors shadow-xs"
+                className="p-2 rounded-xl bg-[#0F172A] border border-slate-800 text-slate-300 hover:bg-slate-800 transition-colors shadow-xs"
                 aria-label="Back to complaints"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-5 h-5 text-slate-300" />
               </Link>
               <div>
-                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
                   Track Your Complaint
                 </h1>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   Real-time status updates and municipal audit trail
                 </p>
               </div>
@@ -166,13 +166,13 @@ export const CitizenComplaintDetail = () => {
                   value={searchId}
                   onChange={(e) => setSearchId(e.target.value)}
                   placeholder="Enter complaint ID"
-                  className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500 shadow-xs"
+                  className="w-full pl-9 pr-3 py-2 bg-[#0F172A] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-400 shadow-xs"
                 />
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
               </div>
               <button
                 type="submit"
-                className="p-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-xs transition-colors flex-shrink-0"
+                className="p-2.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 rounded-xl hover:from-teal-400 hover:to-emerald-400 shadow-xs transition-colors flex-shrink-0 font-bold"
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" />
@@ -181,14 +181,14 @@ export const CitizenComplaintDetail = () => {
           </div>
 
           {/* MAIN STATUS CARD MATCHING REFERENCE TOP RIGHT */}
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+          <div className="bg-[#0F172A]/90 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
               <div>
                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                   Complaint Status
                 </span>
                 <div className="flex items-center gap-3 mt-1">
-                  <span className="font-mono text-xl sm:text-2xl font-extrabold text-slate-900">
+                  <span className="font-mono text-xl sm:text-2xl font-extrabold text-white">
                     #{complaint.complaintNumber}
                   </span>
                   <StatusBadge status={complaint.status} size="sm" />
@@ -203,72 +203,72 @@ export const CitizenComplaintDetail = () => {
 
             {/* Complaint Title & Details */}
             <div className="space-y-2">
-              <h2 className="text-lg font-bold text-slate-900">
+              <h2 className="text-lg font-bold text-white">
                 {complaint.title}
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 {complaint.description}
               </p>
             </div>
 
             {/* Department & Officer meta row */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-[#070B14] border border-slate-800 text-xs">
               <div>
                 <span className="text-[10px] uppercase font-bold text-slate-400">Department</span>
-                <p className="font-semibold text-slate-800 mt-0.5">{complaint.category}</p>
-                <p className="text-[11px] text-slate-500">{complaint.subcategory || "General"}</p>
+                <p className="font-semibold text-slate-200 mt-0.5">{complaint.category}</p>
+                <p className="text-[11px] text-slate-400">{complaint.subcategory || "General"}</p>
               </div>
 
               <div>
                 <span className="text-[10px] uppercase font-bold text-slate-400">Assigned Staff</span>
-                <p className="font-semibold text-slate-800 mt-0.5">
+                <p className="font-semibold text-slate-200 mt-0.5">
                   {complaint.assignedStaff ? complaint.assignedStaff.name : "Pending Dispatch"}
                 </p>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-slate-400">
                   {complaint.assignedStaff ? complaint.assignedStaff.department : "Municipal Queue"}
                 </p>
               </div>
 
               <div>
                 <span className="text-[10px] uppercase font-bold text-slate-400">Priority Level</span>
-                <p className="font-semibold text-blue-700 mt-0.5">{complaint.priority}</p>
-                <p className="text-[11px] text-slate-500">SLA: 24-48 Hours</p>
+                <p className="font-semibold text-teal-400 mt-0.5">{complaint.priority}</p>
+                <p className="text-[11px] text-slate-400">SLA: 24-48 Hours</p>
               </div>
             </div>
 
             {/* AI CLASSIFICATION & PRIORITY RESULT */}
-            <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-3">
+            <div className="p-4 rounded-2xl bg-slate-900/60 border border-teal-500/30 space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-900 uppercase tracking-wider">
-                  <Cpu className="w-4 h-4 text-blue-600" /> AI Classification & Priority Analysis
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-300 uppercase tracking-wider">
+                  <Cpu className="w-4 h-4 text-teal-400" /> AI Classification & Priority Analysis
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-600 text-white shadow-xs">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
                   AI Confidence: {complaint.aiConfidence ? `${Math.round(complaint.aiConfidence * 100)}%` : "Pending AI Analysis"}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-                <div className="bg-white p-3 rounded-xl border border-blue-100 shadow-2xs">
+                <div className="bg-[#070B14] p-3 rounded-xl border border-slate-800">
                   <p className="text-[10px] text-slate-400 font-semibold uppercase">Category</p>
-                  <p className="font-bold text-slate-800 mt-0.5 truncate">
+                  <p className="font-bold text-slate-200 mt-0.5 truncate">
                     {complaint.aiCategory || complaint.category || "Pending AI Analysis"}
                   </p>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-blue-100 shadow-2xs">
+                <div className="bg-[#070B14] p-3 rounded-xl border border-slate-800">
                   <p className="text-[10px] text-slate-400 font-semibold uppercase">Subcategory</p>
-                  <p className="font-bold text-slate-800 mt-0.5 truncate">
+                  <p className="font-bold text-slate-200 mt-0.5 truncate">
                     {complaint.aiSubcategory || complaint.subcategory || (complaint.aiCategory ? "General Issue" : "Pending AI Analysis")}
                   </p>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-blue-100 shadow-2xs">
+                <div className="bg-[#070B14] p-3 rounded-xl border border-slate-800">
                   <p className="text-[10px] text-slate-400 font-semibold uppercase">AI Priority</p>
-                  <p className="font-bold text-amber-600 mt-0.5 truncate">
+                  <p className="font-bold text-amber-400 mt-0.5 truncate">
                     {complaint.aiPriority || complaint.priority || "Pending AI Analysis"}
                   </p>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-blue-100 shadow-2xs">
+                <div className="bg-[#070B14] p-3 rounded-xl border border-slate-800">
                   <p className="text-[10px] text-slate-400 font-semibold uppercase">AI Confidence</p>
-                  <p className="font-bold text-blue-700 mt-0.5 truncate">
+                  <p className="font-bold text-cyan-400 mt-0.5 truncate">
                     {complaint.aiConfidence ? `${Math.round(complaint.aiConfidence * 100)}%` : "Pending AI Analysis"}
                   </p>
                 </div>
@@ -286,37 +286,37 @@ export const CitizenComplaintDetail = () => {
 
           {/* CITIZEN CONFIRMATION ACTION BANNER (When marked RESOLVED) */}
           {complaint.status === "RESOLVED" && (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-3xl p-6 shadow-xs space-y-4">
+            <div className="bg-emerald-950/30 border border-emerald-500/30 rounded-3xl p-6 shadow-lg space-y-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
-                    <CheckCircle className="w-3.5 h-3.5" /> Resolution Completed
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 px-3 py-1 rounded-full">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> Resolution Completed
                   </span>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 mt-2">
+                  <h3 className="text-base sm:text-lg font-bold text-white mt-2">
                     Has this civic issue been satisfactorily resolved?
                   </h3>
-                  <p className="text-xs text-slate-600 mt-1">
+                  <p className="text-xs text-slate-300 mt-1">
                     Please inspect the before & after evidence below. Your confirmation helps us maintain high civic service standards.
                   </p>
                 </div>
 
                 {complaint.citizenConfirmed === true ? (
-                  <div className="px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-2 shadow-xs whitespace-nowrap">
-                    <Check className="w-4 h-4" /> Resolution Confirmed
+                  <div className="px-4 py-2.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center gap-2 shadow-xs whitespace-nowrap">
+                    <Check className="w-4 h-4 text-emerald-400" /> Resolution Confirmed
                   </div>
                 ) : (
                   <div className="flex items-center gap-3 w-full sm:w-auto">
                     <button
                       onClick={handleConfirmResolution}
                       disabled={actionLoading}
-                      className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5"
+                      className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5"
                     >
                       <Check className="w-4 h-4" /> Yes, Resolved
                     </button>
                     <button
                       onClick={() => setShowReopenModal(true)}
                       disabled={actionLoading}
-                      className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-white hover:bg-rose-50 border border-rose-300 text-rose-700 font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+                      className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-rose-950/40 border border-rose-500/40 text-rose-300 font-bold text-xs transition-all flex items-center justify-center gap-1.5"
                     >
                       <RotateCcw className="w-4 h-4" /> Reopen Issue
                     </button>
@@ -328,40 +328,40 @@ export const CitizenComplaintDetail = () => {
 
           {/* REOPENED BANNER IF APPLICABLE */}
           {complaint.status === "REOPENED" && (
-            <div className="bg-rose-50 border border-rose-200 rounded-3xl p-5 text-rose-950">
-              <div className="flex items-center gap-2 font-bold text-xs text-rose-800 uppercase tracking-wider mb-1">
-                <AlertTriangle className="w-4 h-4 text-rose-600" />
+            <div className="bg-rose-950/30 border border-rose-500/30 rounded-3xl p-5 text-rose-200">
+              <div className="flex items-center gap-2 font-bold text-xs text-rose-300 uppercase tracking-wider mb-1">
+                <AlertTriangle className="w-4 h-4 text-rose-400" />
                 Complaint Reopened by Citizen
               </div>
-              <p className="text-xs text-rose-800">
-                <span className="font-semibold">Reason provided:</span> "{complaint.reopenReason}"
+              <p className="text-xs text-rose-200">
+                <span className="font-semibold text-rose-300">Reason provided:</span> "{complaint.reopenReason}"
               </p>
             </div>
           )}
 
           {/* MINI-MAP / LOCATION CARD & EVIDENCE PREVIEW (Matching bottom of reference right panel) */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
-            <h3 className="text-sm font-bold text-slate-900">
+          <div className="bg-[#0F172A]/90 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-4">
+            <h3 className="text-sm font-bold text-white">
               Location & Visual Evidence
             </h3>
 
             {/* Address bar */}
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#070B14] border border-slate-800">
               {beforePhotoUrl ? (
                 <img
                   src={beforePhotoUrl}
                   alt={complaint.title}
-                  className="w-14 h-14 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                  className="w-14 h-14 rounded-xl object-cover border border-slate-800 flex-shrink-0"
                 />
               ) : (
-                <div className="w-14 h-14 rounded-xl bg-slate-200 flex items-center justify-center text-slate-400 flex-shrink-0">
+                <div className="w-14 h-14 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 flex-shrink-0">
                   <ImageIcon className="w-6 h-6" />
                 </div>
               )}
               <div className="min-w-0">
-                <p className="text-xs font-bold text-slate-900 truncate">{complaint.title}</p>
-                <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5 truncate">
-                  <MapPin className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
+                <p className="text-xs font-bold text-white truncate">{complaint.title}</p>
+                <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5 truncate">
+                  <MapPin className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />
                   {complaint.locationAddress}
                 </p>
               </div>
@@ -381,15 +381,15 @@ export const CitizenComplaintDetail = () => {
 
       {/* REOPEN MODAL */}
       {showReopenModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95 max-h-[90dvh] overflow-y-auto">
-            <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mb-4">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[#0F172A] border border-slate-800 rounded-3xl p-5 sm:p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in-95 max-h-[90dvh] overflow-y-auto text-slate-100">
+            <div className="w-12 h-12 rounded-2xl bg-rose-950/50 border border-rose-500/30 text-rose-400 flex items-center justify-center mb-4">
               <RotateCcw className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900">
+            <h3 className="text-lg font-bold text-white">
               Reopen Complaint
             </h3>
-            <p className="text-xs text-slate-500 mt-1 mb-4">
+            <p className="text-xs text-slate-400 mt-1 mb-4">
               Why are you reopening complaint #{complaint.complaintNumber}? Please specify why the repair was incomplete or unsatisfactory.
             </p>
 
@@ -400,21 +400,21 @@ export const CitizenComplaintDetail = () => {
                 value={reopenReason}
                 onChange={(e) => setReopenReason(e.target.value)}
                 placeholder="e.g. The garbage was only partially collected, spilled waste was left behind on the road corner..."
-                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-rose-500 focus:bg-white resize-y"
+                className="w-full p-3 bg-[#070B14] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-400 resize-y"
               />
 
               <div className="flex items-center justify-end gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowReopenModal(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  className="px-4 py-2 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:bg-slate-800 hover:text-slate-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5"
+                  className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5"
                 >
                   {actionLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Reopen & Escalate"}
                 </button>
