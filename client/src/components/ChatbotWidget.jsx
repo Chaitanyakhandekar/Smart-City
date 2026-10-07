@@ -64,14 +64,14 @@ function getQuickActions(role) {
 
 const TypingIndicator = () => (
   <div className="flex items-center gap-2 pl-2">
-    <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0">
+    <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-teal-500 to-cyan-500 text-slate-950 flex items-center justify-center flex-shrink-0 font-bold">
       <Bot className="w-4 h-4" />
     </div>
-    <div className="bg-white border border-slate-200 rounded-2xl rounded-bl-xs px-4 py-3 shadow-xs">
+    <div className="bg-[#0F172A] border border-slate-800 rounded-2xl rounded-bl-xs px-4 py-3 shadow-md">
       <div className="flex items-center gap-1.5">
-        <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
-        <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
-        <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+        <span className="w-2 h-2 bg-teal-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+        <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+        <span className="w-2 h-2 bg-sky-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
       </div>
     </div>
   </div>
@@ -167,16 +167,16 @@ export const ChatbotWidget = () => {
     <div className="fixed bottom-20 md:bottom-6 right-3 sm:right-6 z-50">
       {/* Chat Window */}
       {isOpen ? (
-        <div className="w-[calc(100vw-24px)] sm:w-[400px] max-w-[400px] h-[min(540px,calc(100dvh-110px))] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-6">
+        <div className="w-[calc(100vw-24px)] sm:w-[400px] max-w-[400px] h-[min(540px,calc(100dvh-110px))] bg-[#0F172A] rounded-3xl shadow-2xl border border-slate-800 flex flex-col overflow-hidden transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-6">
           {/* Header */}
-          <div className="bg-[#0F172A] text-white p-4 flex items-center justify-between border-b border-slate-800 shadow-sm">
+          <div className="bg-[#0B1120] text-white p-4 flex items-center justify-between border-b border-slate-800 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-500 to-cyan-500 flex items-center justify-center text-slate-950 font-bold shadow-md shadow-teal-500/20">
                 <Bot className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold flex items-center gap-1.5" id="chatbot-header-title">
-                  Smart City Assistant <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                <h3 className="text-sm font-bold flex items-center gap-1.5 text-white" id="chatbot-header-title">
+                  Smart City Assistant <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                 </h3>
                 <span className="text-[10px] text-slate-400 flex items-center gap-1">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
@@ -195,30 +195,30 @@ export const ChatbotWidget = () => {
           </div>
 
           {/* Chat Messages */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-50/70 text-xs sm:text-sm" id="chatbot-messages">
+          <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-[#070B14] text-xs sm:text-sm" id="chatbot-messages">
             {messages.map((msg, i) => (
               <div
                 key={i}
                 className={`flex gap-2.5 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 {msg.sender === "bot" && (
-                  <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0 mt-1 shadow-xs">
+                  <div className="w-7 h-7 rounded-lg bg-teal-500/20 text-teal-300 border border-teal-500/40 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
                     <Bot className="w-4 h-4" />
                   </div>
                 )}
                 <div
                   className={`p-3.5 rounded-2xl max-w-[85%] leading-relaxed ${
                     msg.sender === "user"
-                      ? "bg-blue-600 text-white rounded-br-xs shadow-xs"
-                      : "bg-white text-slate-800 border border-slate-200/80 rounded-bl-xs shadow-xs"
+                      ? "bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-br-xs shadow-md"
+                      : "bg-[#0F172A] text-slate-200 border border-slate-800 rounded-bl-xs shadow-md"
                   }`}
                 >
-                  <div className="prose prose-xs max-w-none text-current [&_strong]:text-current [&_a]:text-current">
+                  <div className="prose prose-xs prose-invert max-w-none text-current [&_strong]:text-teal-300 [&_a]:text-cyan-400">
                     <ReactMarkdown>{msg.text}</ReactMarkdown>
                   </div>
                 </div>
                 {msg.sender === "user" && (
-                  <div className="w-7 h-7 rounded-lg bg-slate-800 text-white flex items-center justify-center flex-shrink-0 mt-1 shadow-xs">
+                  <div className="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
                     <User className="w-4 h-4" />
                   </div>
                 )}
@@ -230,13 +230,13 @@ export const ChatbotWidget = () => {
           </div>
 
           {/* Quick Action Chips */}
-          <div className="px-3 py-2 bg-white border-t border-slate-100 flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="chatbot-quick-actions">
+          <div className="px-3 py-2 bg-[#0B1120] border-t border-slate-800 flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="chatbot-quick-actions">
             {quickActions.map((action, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(action.message)}
                 disabled={loading}
-                className="whitespace-nowrap px-2.5 py-1 rounded-lg bg-slate-100/80 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 text-[11px] font-medium text-slate-600 transition-colors border border-slate-200 disabled:opacity-40"
+                className="whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#0F172A] hover:bg-teal-500/10 text-slate-300 hover:text-teal-300 hover:border-teal-500/50 text-[11px] font-medium transition-colors border border-slate-700/80 disabled:opacity-40"
                 id={`chatbot-quick-${idx}`}
               >
                 {action.label}
@@ -250,7 +250,7 @@ export const ChatbotWidget = () => {
               e.preventDefault();
               handleSend();
             }}
-            className="p-3 bg-white border-t border-slate-200 flex items-center gap-2"
+            className="p-3 bg-[#0B1120] border-t border-slate-800 flex items-center gap-2"
           >
             <input
               ref={inputRef}
@@ -260,13 +260,13 @@ export const ChatbotWidget = () => {
               onKeyDown={handleKeyDown}
               placeholder="Ask about your complaints, status..."
               disabled={loading}
-              className="flex-1 text-xs sm:text-sm px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white disabled:opacity-60 transition-colors"
+              className="flex-1 text-xs sm:text-sm px-3.5 py-2.5 bg-[#070B14] border border-slate-700 text-slate-200 placeholder-slate-500 rounded-xl focus:outline-none focus:border-teal-500 disabled:opacity-60 transition-colors"
               id="chatbot-input"
             />
             <button
               type="submit"
               disabled={!inputMessage.trim() || loading}
-              className="p-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-40 disabled:hover:bg-blue-600 transition-colors shadow-sm"
+              className="p-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 hover:brightness-110 disabled:opacity-40 transition-all shadow-md font-bold"
               aria-label="Send message"
               id="chatbot-send-btn"
             >
@@ -278,15 +278,15 @@ export const ChatbotWidget = () => {
         /* Floating Button */
         <button
           onClick={() => setIsOpen(true)}
-          className="flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#0F172A] hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm rounded-full shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-slate-700/60 group"
+          className="flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#0F172A]/90 backdrop-blur-md hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm rounded-full shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-teal-500/30 group"
           aria-label="Open Smart City Assistant"
           id="chatbot-open-btn"
         >
           <div className="relative">
-            <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-            <span className="absolute -top-1 -right-1 w-2 sm:w-2.5 h-2 sm:h-2.5 bg-blue-500 rounded-full animate-ping"></span>
+            <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
+            <span className="absolute -top-1 -right-1 w-2 sm:w-2.5 h-2 sm:h-2.5 bg-teal-400 rounded-full animate-ping"></span>
           </div>
-          <span className="tracking-tight whitespace-nowrap">Smart Assistant</span>
+          <span className="tracking-tight whitespace-nowrap text-slate-100">Smart Assistant</span>
         </button>
       )}
     </div>

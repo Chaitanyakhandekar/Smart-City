@@ -63,7 +63,7 @@ export const StaffTasks = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans text-slate-800 pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#070B14] flex flex-col font-sans text-slate-100 pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -72,10 +72,10 @@ export const StaffTasks = () => {
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
                 Assigned Field Tasks
               </h1>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-slate-400 mt-1">
                 Grievances dispatched to your department requiring on-site resolution
               </p>
             </div>
@@ -83,24 +83,24 @@ export const StaffTasks = () => {
               type="button"
               onClick={() => fetchTasks(true)}
               disabled={refreshing}
-              className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
+              className="px-3.5 py-2 rounded-xl bg-[#0F172A] border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
               title="Refresh Assigned Tasks"
             >
-              <RefreshCw className={`w-3.5 h-3.5 text-blue-600 ${refreshing ? "animate-spin" : ""}`} />
+              <RefreshCw className={`w-3.5 h-3.5 text-teal-400 ${refreshing ? "animate-spin" : ""}`} />
               {refreshing ? "Refreshing..." : "Refresh Tasks"}
             </button>
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center gap-3">
+          <div className="bg-[#0F172A]/90 rounded-2xl p-4 border border-slate-800 shadow-md flex flex-col md:flex-row items-center gap-3">
             <form onSubmit={handleSearch} className="flex-1 relative w-full">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+              <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by ID, keyword, or street address..."
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full pl-10 pr-4 py-2 bg-[#070B14] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-400"
               />
             </form>
 
@@ -108,7 +108,7 @@ export const StaffTasks = () => {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full md:w-auto px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                className="w-full md:w-auto px-3 py-2 bg-[#070B14] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-teal-400"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="ASSIGNED">Assigned</option>
@@ -120,7 +120,7 @@ export const StaffTasks = () => {
               <select
                 value={priorityFilter}
                 onChange={(e) => setPriorityFilter(e.target.value)}
-                className="w-full md:w-auto px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                className="w-full md:w-auto px-3 py-2 bg-[#070B14] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-teal-400"
               >
                 <option value="ALL">All Priorities</option>
                 <option value="CRITICAL">CRITICAL</option>
@@ -133,12 +133,12 @@ export const StaffTasks = () => {
 
           {/* Tasks List */}
           {loading ? (
-            <div className="py-20 flex justify-center text-blue-600">
+            <div className="py-20 flex justify-center text-teal-400">
               <Loader2 className="w-8 h-8 animate-spin" />
             </div>
           ) : tasks.length === 0 ? (
-            <div className="bg-white rounded-3xl p-12 text-center border border-slate-200/80 shadow-xs">
-              <p className="text-base font-semibold text-slate-800">No tasks found</p>
+            <div className="bg-[#0F172A] rounded-3xl p-12 text-center border border-slate-800 shadow-md">
+              <p className="text-base font-semibold text-slate-200">No tasks found</p>
               <p className="text-xs text-slate-400 mt-1">Check back later or adjust your status filter.</p>
             </div>
           ) : (
@@ -150,13 +150,13 @@ export const StaffTasks = () => {
                 return (
                   <div
                     key={task._id}
-                    className={`bg-white rounded-3xl p-5 border shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between ${
-                      isHighPriority ? "border-amber-300 ring-1 ring-amber-200" : "border-slate-200/80"
+                    className={`bg-[#0F172A]/90 rounded-3xl p-5 border shadow-md hover:shadow-lg transition-all flex flex-col justify-between ${
+                      isHighPriority ? "border-amber-500/40 ring-1 ring-amber-500/20" : "border-slate-800 hover:border-slate-700"
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className="font-mono text-xs font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+                        <span className="font-mono text-xs font-bold text-teal-300 bg-teal-950/40 px-2.5 py-1 rounded-md border border-teal-500/30">
                           #{task.complaintNumber}
                         </span>
                         <div className="flex items-center gap-1.5">
@@ -165,10 +165,10 @@ export const StaffTasks = () => {
                         </div>
                       </div>
 
-                      <h3 className="font-bold text-slate-900 text-base mb-1 line-clamp-1">
+                      <h3 className="font-bold text-white text-base mb-1 line-clamp-1">
                         {task.title}
                       </h3>
-                      <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-3">
+                      <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-3">
                         {task.description}
                       </p>
 
@@ -177,17 +177,17 @@ export const StaffTasks = () => {
                           <img
                             src={beforeUrl}
                             alt="Before"
-                            className="w-14 h-14 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-14 h-14 rounded-xl object-cover border border-slate-800 flex-shrink-0"
                           />
                         ) : (
-                          <div className="w-14 h-14 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 flex-shrink-0">
+                          <div className="w-14 h-14 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 flex-shrink-0">
                             <ImageIcon className="w-6 h-6" />
                           </div>
                         )}
 
-                        <div className="flex flex-col text-xs text-slate-500 space-y-1">
-                          <span className="flex items-center gap-1 line-clamp-1 font-medium text-slate-700">
-                            <MapPin className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                        <div className="flex flex-col text-xs text-slate-400 space-y-1">
+                          <span className="flex items-center gap-1 line-clamp-1 font-medium text-slate-300">
+                            <MapPin className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />
                             {task.locationAddress}
                           </span>
                           <span className="text-[11px] text-slate-400">
@@ -197,17 +197,17 @@ export const StaffTasks = () => {
                       </div>
                     </div>
 
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+                    <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" />
+                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
                         {dayjs(task.createdAt).format("DD MMM YYYY")}
                       </span>
 
                       <Link
-                        to={`/staff/complaints/${task._id}`}
-                        className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold transition-colors flex items-center gap-1"
+                        to={`/staff/tasks/${task._id}`}
+                        className="px-3 py-1.5 rounded-lg bg-[#070B14] hover:bg-teal-950/40 hover:text-teal-300 text-slate-300 border border-slate-800 text-xs font-semibold transition-colors flex items-center gap-1"
                       >
-                        Inspect & Action <ArrowRight className="w-3.5 h-3.5" />
+                        Inspect & Action <ArrowRight className="w-3.5 h-3.5 text-teal-400" />
                       </Link>
                     </div>
                   </div>

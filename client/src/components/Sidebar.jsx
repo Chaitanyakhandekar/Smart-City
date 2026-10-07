@@ -71,21 +71,26 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
       {/* Sidebar container */}
       <aside
-        className={`fixed top-16 bottom-0 left-0 w-64 bg-[#0F172A] text-slate-300 z-40 transition-transform duration-200 ease-in-out lg:translate-x-0 flex flex-col justify-between border-r border-slate-800 ${
+        className={`fixed top-16 bottom-0 left-0 w-64 bg-[#0B1120] text-slate-300 z-40 transition-transform duration-200 ease-in-out lg:translate-x-0 flex flex-col justify-between border-r border-slate-800/80 shadow-2xl ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col flex-1 p-4 overflow-y-auto">
           {/* Header section in sidebar */}
           <div className="px-3 py-3 mb-2 flex items-center justify-between border-b border-slate-800/80">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className={`text-[11px] font-bold uppercase tracking-wider ${
+              role === "ADMIN" ? "text-purple-400" : role === "STAFF" ? "text-amber-400" : "text-teal-400"
+            }`}>
               {role === "ADMIN" ? "Admin Console" : role === "STAFF" ? `${user?.department || "Field"} Staff` : "Citizen Portal"}
             </span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
+            </span>
           </div>
 
           {/* Navigation Links */}
-          <nav className="space-y-1 mt-2">
+          <nav className="space-y-1.5 mt-2">
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
@@ -96,10 +101,10 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   className={({ isActive }) =>
                     `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                       isActive
-                        ? "bg-blue-600 text-white font-semibold shadow-md shadow-blue-600/20"
+                        ? "bg-gradient-to-r from-teal-500/20 via-teal-500/10 to-emerald-500/10 text-teal-300 font-semibold border border-teal-500/30 shadow-md shadow-teal-500/5"
                         : link.highlight
-                        ? "bg-blue-900/30 text-blue-400 hover:bg-blue-900/50 hover:text-white"
-                        : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+                        ? "bg-amber-500/10 text-amber-300 border border-amber-500/20 hover:bg-amber-500/20"
+                        : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
                     }`
                   }
                 >
@@ -117,14 +122,14 @@ export const Sidebar = ({ isOpen, onClose }) => {
         {/* Bottom Section */}
         <div className="p-4 border-t border-slate-800/80 space-y-2">
           {/* User quick card */}
-          <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-800/50 border border-slate-800 text-xs">
+          <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#070B14]/80 border border-slate-800 text-xs">
             <img
               src={user?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"}
               alt={user?.name}
               className="w-7 h-7 rounded-full object-cover border border-slate-700"
             />
             <div className="flex flex-col min-w-0">
-              <span className="font-semibold text-white truncate text-xs">
+              <span className="font-semibold text-slate-200 truncate text-xs">
                 {user?.name}
               </span>
               <span className="text-[10px] text-slate-400 truncate">

@@ -35,24 +35,24 @@ export const MobileNavBottom = () => {
       <>
         {showMore && (
           <div
-            className="md:hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex flex-col justify-end animate-in fade-in"
+            className="md:hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex flex-col justify-end animate-in fade-in"
             onClick={() => setShowMore(false)}
           >
             <div
-              className="bg-white rounded-t-3xl p-5 border-t border-slate-200 shadow-2xl space-y-4"
+              className="bg-[#0F172A] rounded-t-3xl p-5 border-t border-slate-800 shadow-2xl space-y-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                 <div className="flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-blue-600" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-900">
+                  <Shield className="w-4 h-4 text-purple-400" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-white">
                     Admin Navigation
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setShowMore(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600"
+                  className="p-1 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -62,30 +62,23 @@ export const MobileNavBottom = () => {
                 <NavLink
                   to="/admin/notifications"
                   onClick={() => setShowMore(false)}
-                  className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 flex items-center justify-between font-semibold text-slate-700 hover:text-blue-700"
+                  className="p-3 rounded-xl bg-[#070B14] hover:bg-purple-950/30 border border-slate-800 flex items-center gap-2 font-semibold text-slate-300 hover:text-purple-300 transition-colors"
                 >
-                  <div className="flex items-center gap-2">
-                    <Bell className="w-4 h-4 text-blue-600" /> Notifications
-                  </div>
-                  {unreadCount > 0 && (
-                    <span className="px-1.5 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-bold">
-                      {unreadCount > 9 ? "9+" : unreadCount}
-                    </span>
-                  )}
+                  <Bell className="w-4 h-4 text-purple-400" /> Notifications
                 </NavLink>
                 <NavLink
                   to="/admin/profile"
                   onClick={() => setShowMore(false)}
-                  className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-700"
+                  className="p-3 rounded-xl bg-[#070B14] hover:bg-purple-950/30 border border-slate-800 flex items-center gap-2 font-semibold text-slate-300 hover:text-purple-300 transition-colors"
                 >
-                  <User className="w-4 h-4 text-blue-600" /> My Profile
+                  <User className="w-4 h-4 text-purple-400" /> My Profile
                 </NavLink>
               </div>
 
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full p-3 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 flex items-center justify-center gap-2 text-xs font-bold hover:bg-rose-100 transition-colors"
+                className="w-full p-3 rounded-xl bg-rose-500/10 text-rose-300 border border-rose-500/30 flex items-center justify-center gap-2 text-xs font-bold hover:bg-rose-500/20 transition-colors"
               >
                 <LogOut className="w-4 h-4" /> Sign Out
               </button>
@@ -94,14 +87,13 @@ export const MobileNavBottom = () => {
         )}
 
         <nav
-          className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
+          className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-[#0B1120]/95 backdrop-blur-md border-t border-slate-800 z-40 flex items-center justify-around px-2 shadow-2xl"
           aria-label="Mobile Navigation"
         >
           <NavLink
             to="/admin/dashboard"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-purple-400 font-bold" : "text-slate-400 hover:text-white font-medium"
               }`
             }
           >
@@ -112,8 +104,7 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/complaints"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-purple-400 font-bold" : "text-slate-400 hover:text-white font-medium"
               }`
             }
           >
@@ -124,8 +115,7 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/staff"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-purple-400 font-bold" : "text-slate-400 hover:text-white font-medium"
               }`
             }
           >
@@ -136,8 +126,7 @@ export const MobileNavBottom = () => {
           <NavLink
             to="/admin/analytics"
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+              `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-purple-400 font-bold" : "text-slate-400 hover:text-white font-medium"
               }`
             }
           >
@@ -148,7 +137,7 @@ export const MobileNavBottom = () => {
           <button
             type="button"
             onClick={() => setShowMore(true)}
-            className="flex flex-col items-center justify-center flex-1 py-1 text-slate-500 hover:text-slate-900 font-medium transition-colors"
+            className="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-white font-medium transition-colors"
           >
             <div className="relative">
               <MoreHorizontal className="w-5 h-5 mb-0.5" />
@@ -166,14 +155,13 @@ export const MobileNavBottom = () => {
   if (role === "STAFF") {
     return (
       <nav
-        className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
+        className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-[#0B1120]/95 backdrop-blur-md border-t border-slate-800 z-40 flex items-center justify-around px-2 shadow-2xl"
         aria-label="Mobile Navigation"
       >
         <NavLink
           to="/staff/dashboard"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-amber-400 font-bold" : "text-slate-400 hover:text-white font-medium"
             }`
           }
         >
@@ -184,8 +172,7 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/tasks"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-amber-400 font-bold" : "text-slate-400 hover:text-white font-medium"
             }`
           }
         >
@@ -196,8 +183,7 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/notifications"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-amber-400 font-bold" : "text-slate-400 hover:text-white font-medium"
             }`
           }
         >
@@ -215,8 +201,7 @@ export const MobileNavBottom = () => {
         <NavLink
           to="/staff/profile"
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-              isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+            `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-amber-400 font-bold" : "text-slate-400 hover:text-white font-medium"
             }`
           }
         >
@@ -230,14 +215,13 @@ export const MobileNavBottom = () => {
   // CITIZEN ROLE
   return (
     <nav
-      className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around px-2 shadow-lg"
+      className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-[#0B1120]/95 backdrop-blur-md border-t border-slate-800 z-40 flex items-center justify-around px-2 shadow-2xl"
       aria-label="Mobile Navigation"
     >
       <NavLink
         to="/citizen/dashboard"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-teal-400 font-bold" : "text-slate-400 hover:text-white font-medium"
           }`
         }
       >
@@ -248,8 +232,7 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/complaints"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-teal-400 font-bold" : "text-slate-400 hover:text-white font-medium"
           }`
         }
       >
@@ -259,19 +242,18 @@ export const MobileNavBottom = () => {
 
       <NavLink
         to="/citizen/report"
-        className="flex flex-col items-center justify-center flex-1 py-1 text-blue-600"
+        className="flex flex-col items-center justify-center flex-1 py-1"
       >
-        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-600/30 -mt-5">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 flex items-center justify-center shadow-lg shadow-teal-500/30 -mt-5 font-bold hover:scale-105 transition-transform">
           <PlusCircle className="w-5 h-5" />
         </div>
-        <span className="text-[10px] font-bold text-blue-600 tracking-tight mt-0.5">Report</span>
+        <span className="text-[10px] font-bold text-teal-400 tracking-tight mt-0.5">Report</span>
       </NavLink>
 
       <NavLink
         to="/citizen/notifications"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-teal-400 font-bold" : "text-slate-400 hover:text-white font-medium"
           }`
         }
       >
@@ -289,8 +271,7 @@ export const MobileNavBottom = () => {
       <NavLink
         to="/citizen/profile"
         className={({ isActive }) =>
-          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-            isActive ? "text-blue-600 font-bold" : "text-slate-500 hover:text-slate-900 font-medium"
+          `flex flex-col items-center justify-center flex-1 py-1 transition-colors ${isActive ? "text-teal-400 font-bold" : "text-slate-400 hover:text-white font-medium"
           }`
         }
       >

@@ -37,7 +37,19 @@ import AdminProfile from "./pages/admin/AdminProfile";
 function App() {
   return (
     <>
-      <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: "#0F172A",
+            color: "#F1F5F9",
+            border: "1px solid #334155",
+            borderRadius: "1rem",
+            fontSize: "0.875rem"
+          }
+        }}
+      />
 
       <Routes>
         {/* Public Routes */}

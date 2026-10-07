@@ -55,69 +55,72 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#070B14] flex flex-col font-sans relative overflow-hidden text-slate-100">
+      {/* Ambient background glows */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-teal-500/10 via-cyan-500/10 to-indigo-500/10 rounded-full filter blur-3xl pointer-events-none" />
+
       <Navbar />
 
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8 relative z-10">
         <div className="max-w-md w-full">
           {/* Header Card */}
           <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center mb-3">
               <SmartCityLogo size="lg" />
             </div>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Sign In to Smart City
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">
               Unified Civic Grievance & Municipal Operations Portal
             </p>
           </div>
 
           {/* Quick Demo Fill Buttons (For Quick Evaluation) */}
-          <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-3.5 sm:p-4 mb-6 shadow-xs">
-            <div className="flex items-center justify-between text-xs font-semibold text-blue-900 mb-2.5">
-              <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" /> 1-Click Evaluation Accounts
+          <div className="bg-[#0F172A]/90 border border-slate-800 rounded-3xl p-4 sm:p-4.5 mb-6 shadow-xl backdrop-blur-md">
+            <div className="flex items-center justify-between text-xs font-semibold text-slate-300 mb-2.5">
+              <span className="flex items-center gap-1.5 font-bold text-teal-400">
+                <Sparkles className="w-3.5 h-3.5 text-teal-400" /> 1-Click Evaluation Accounts
               </span>
-              <span className="text-[10px] text-blue-500 font-medium">Pre-fills Credentials</span>
+              <span className="text-[10px] text-slate-400 font-medium">Auto-fills Form</span>
             </div>
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => fillDemo("admin@smartcity.local", "Admin@123")}
-                className="px-2 py-2 sm:py-2.5 min-h-[44px] rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
+                className="px-2 py-2.5 min-h-[44px] rounded-2xl bg-purple-950/30 hover:bg-purple-900/50 border border-purple-500/30 text-[11px] font-bold text-purple-200 transition-all flex flex-col items-center justify-center gap-1 shadow-xs hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Shield className="w-4 h-4 text-purple-600" />
+                <Shield className="w-4 h-4 text-purple-400" />
                 <span>Admin</span>
               </button>
               <button
                 type="button"
                 onClick={() => fillDemo("staff@smartcity.local", "Staff@123")}
-                className="px-2 py-2 sm:py-2.5 min-h-[44px] rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
+                className="px-2 py-2.5 min-h-[44px] rounded-2xl bg-amber-950/30 hover:bg-amber-900/50 border border-amber-500/30 text-[11px] font-bold text-amber-200 transition-all flex flex-col items-center justify-center gap-1 shadow-xs hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Briefcase className="w-4 h-4 text-amber-600" />
+                <Briefcase className="w-4 h-4 text-amber-400" />
                 <span>Staff</span>
               </button>
               <button
                 type="button"
                 onClick={() => fillDemo("citizen@smartcity.local", "Citizen@123")}
-                className="px-2 py-2 sm:py-2.5 min-h-[44px] rounded-xl bg-white hover:bg-blue-100/50 border border-blue-200 text-[11px] font-semibold text-slate-700 hover:text-blue-900 transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
+                className="px-2 py-2.5 min-h-[44px] rounded-2xl bg-teal-950/30 hover:bg-teal-900/50 border border-teal-500/30 text-[11px] font-bold text-teal-200 transition-all flex flex-col items-center justify-center gap-1 shadow-xs hover:scale-[1.02] active:scale-[0.98]"
               >
-                <User className="w-4 h-4 text-blue-600" />
+                <User className="w-4 h-4 text-teal-400" />
                 <span>Citizen</span>
               </button>
             </div>
           </div>
 
           {/* Form Card */}
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+          <div className="bg-[#0F172A]/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Email Address
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                     <Mail className="w-4 h-4" />
                   </div>
                   <input
@@ -126,17 +129,17 @@ export const Login = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@example.com"
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition-all text-slate-800"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#070B14] border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400/50 transition-all text-slate-100 placeholder-slate-600"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
                   Password
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                     <Lock className="w-4 h-4" />
                   </div>
                   <input
@@ -145,7 +148,7 @@ export const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition-all text-slate-800"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#070B14] border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400/50 transition-all text-slate-100 placeholder-slate-600"
                   />
                 </div>
               </div>
@@ -153,11 +156,11 @@ export const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-sm hover:shadow disabled:opacity-50 transition-all flex items-center justify-center gap-2 mt-2"
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-teal-500 via-teal-400 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-bold text-sm shadow-lg shadow-teal-500/20 disabled:opacity-50 transition-all flex items-center justify-center gap-2 mt-2"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
                     Signing In...
                   </>
                 ) : (
@@ -168,10 +171,10 @@ export const Login = () => {
               </button>
             </form>
 
-            <div className="mt-6 pt-5 border-t border-slate-100 text-center">
-              <p className="text-xs text-slate-500">
+            <div className="mt-6 pt-5 border-t border-slate-800 text-center">
+              <p className="text-xs text-slate-400">
                 New citizen?{" "}
-                <Link to="/register" className="font-semibold text-blue-600 hover:underline">
+                <Link to="/register" className="font-semibold text-teal-400 hover:text-teal-300 hover:underline">
                   Register citizen account
                 </Link>
               </p>

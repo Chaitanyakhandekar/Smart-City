@@ -67,7 +67,7 @@ export const CitizenComplaints = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans text-slate-800 pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#070B14] flex flex-col font-sans text-slate-100 pb-16 md:pb-0">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex-1 flex">
@@ -76,10 +76,10 @@ export const CitizenComplaints = () => {
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
                 My Grievance History
               </h1>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-slate-400 mt-1">
                 View resolution progress, photographic proofs, and feedback actions
               </p>
             </div>
@@ -88,15 +88,15 @@ export const CitizenComplaints = () => {
                 type="button"
                 onClick={() => fetchComplaints(true)}
                 disabled={refreshing}
-                className="px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
+                className="px-3.5 py-2.5 rounded-xl border border-slate-800 bg-[#0F172A] hover:bg-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
                 title="Refresh Grievances"
               >
-                <RefreshCw className={`w-3.5 h-3.5 text-blue-600 ${refreshing ? "animate-spin" : ""}`} />
+                <RefreshCw className={`w-3.5 h-3.5 text-teal-400 ${refreshing ? "animate-spin" : ""}`} />
                 {refreshing ? "Refreshing..." : "Refresh"}
               </button>
               <Link
                 to="/citizen/report"
-                className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm hover:shadow flex items-center gap-2 transition-all whitespace-nowrap"
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-md shadow-teal-500/20 flex items-center gap-2 transition-all whitespace-nowrap"
               >
                 <PlusCircle className="w-4 h-4" /> Report Issue
               </Link>
@@ -104,16 +104,16 @@ export const CitizenComplaints = () => {
           </div>
 
           {/* Filters & Search */}
-          <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs mb-6">
+          <div className="bg-[#0F172A]/90 rounded-2xl p-4 border border-slate-800/80 shadow-md mb-6">
             <div className="flex flex-col md:flex-row items-center gap-3">
               <form onSubmit={handleSearch} className="flex-1 relative w-full">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search by complaint ID, title, or location..."
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
+                  className="w-full pl-10 pr-4 py-2 bg-[#070B14] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-400"
                 />
               </form>
 
@@ -121,7 +121,7 @@ export const CitizenComplaints = () => {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="w-full md:w-auto px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full md:w-auto px-3 py-2 bg-[#070B14] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-teal-400"
                 >
                   <option value="ALL">All Statuses</option>
                   <option value="SUBMITTED">Submitted</option>
@@ -135,7 +135,7 @@ export const CitizenComplaints = () => {
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="w-full md:w-auto px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full md:w-auto px-3 py-2 bg-[#070B14] border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-teal-400"
                 >
                   <option value="ALL">All Categories</option>
                   <option value="Waste Management">Waste Management</option>
@@ -151,13 +151,13 @@ export const CitizenComplaints = () => {
 
           {/* Complaints List */}
           {loading ? (
-            <div className="py-20 flex justify-center text-blue-600">
+            <div className="py-20 flex justify-center text-teal-400">
               <Loader2 className="w-8 h-8 animate-spin" />
             </div>
           ) : complaints.length === 0 ? (
-            <div className="bg-white rounded-3xl p-12 text-center border border-slate-200/80 shadow-xs">
-              <p className="text-base font-semibold text-slate-800">No complaints found</p>
-              <p className="text-xs text-slate-500 mt-1">Try adjusting your filters or search term.</p>
+            <div className="bg-[#0F172A] rounded-3xl p-12 text-center border border-slate-800 shadow-md">
+              <p className="text-base font-semibold text-slate-200">No complaints found</p>
+              <p className="text-xs text-slate-400 mt-1">Try adjusting your filters or search term.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -167,12 +167,12 @@ export const CitizenComplaints = () => {
                 return (
                   <div
                     key={comp._id}
-                    className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                    className="bg-[#0F172A]/90 rounded-3xl p-5 border border-slate-800 hover:border-slate-700 shadow-md hover:shadow-lg transition-all flex flex-col justify-between"
                   >
                     <div>
                       {/* Top Header */}
                       <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className="font-mono text-xs font-extrabold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                        <span className="font-mono text-xs font-extrabold text-teal-300 bg-teal-950/40 px-2.5 py-1 rounded-md border border-teal-500/30">
                           #{comp.complaintNumber}
                         </span>
                         <div className="flex items-center gap-1.5">
@@ -182,10 +182,10 @@ export const CitizenComplaints = () => {
                       </div>
 
                       {/* Title & Description */}
-                      <h3 className="font-bold text-slate-900 text-base mb-1 line-clamp-1">
+                      <h3 className="font-bold text-white text-base mb-1 line-clamp-1">
                         {comp.title}
                       </h3>
-                      <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-3">
+                      <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-3">
                         {comp.description}
                       </p>
 
@@ -195,38 +195,38 @@ export const CitizenComplaints = () => {
                           <img
                             src={beforeUrl}
                             alt="Before"
-                            className="w-14 h-14 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-14 h-14 rounded-xl object-cover border border-slate-800 flex-shrink-0"
                           />
                         ) : (
-                          <div className="w-14 h-14 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 flex-shrink-0">
+                          <div className="w-14 h-14 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 flex-shrink-0">
                             <ImageIcon className="w-6 h-6" />
                           </div>
                         )}
 
-                        <div className="flex flex-col text-xs text-slate-500 space-y-1">
-                          <span className="flex items-center gap-1 line-clamp-1 font-medium text-slate-700">
-                            <MapPin className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                        <div className="flex flex-col text-xs text-slate-400 space-y-1">
+                          <span className="flex items-center gap-1 line-clamp-1 font-medium text-slate-300">
+                            <MapPin className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />
                             {comp.locationAddress}
                           </span>
                           <span className="text-[11px] text-slate-400">
-                            Dept: {comp.category} • {comp.subcategory || "General"}
+                            Dept: <span className="text-slate-300">{comp.category}</span> • {comp.subcategory || "General"}
                           </span>
                         </div>
                       </div>
                     </div>
 
                     {/* Bottom Action Footer */}
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+                    <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" />
+                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
                         {dayjs(comp.createdAt).format("DD MMM YYYY")}
                       </span>
 
                       <Link
                         to={`/citizen/complaints/${comp._id}`}
-                        className="px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-blue-700 text-xs font-semibold text-slate-700 transition-colors flex items-center gap-1"
+                        className="px-3 py-1.5 rounded-lg bg-[#070B14] hover:bg-teal-950/40 hover:text-teal-300 text-xs font-semibold text-slate-300 border border-slate-800 transition-colors flex items-center gap-1"
                       >
-                        Details & Proof <ArrowRight className="w-3.5 h-3.5" />
+                        Details & Proof <ArrowRight className="w-3.5 h-3.5 text-teal-400" />
                       </Link>
                     </div>
                   </div>
