@@ -1,10 +1,10 @@
 import { Complaint } from "../models/complaints.model.js";
 import { ComplaintImage } from "../models/complaintImages.model.js";
 import { ComplaintUpdate } from "../models/complaintUpdates.model.js";
-import { Notification } from "../models/notifications.model.js";
 import { User } from "../models/users.model.js";
 import { ApiError, ApiResponse } from "../utils/apiUtils.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { createNotification, createBulkNotifications } from "../services/notification.service.js";
 
 /**
  * Staff Dashboard Summary
@@ -144,13 +144,18 @@ export const startWorkOnTask = asyncHandler(async (req, res) => {
   });
 
   // Notify Citizen
-  await Notification.create({
-    recipient: complaint.citizen,
-    type: "STATUS_UPDATE",
-    title: "Work In Progress",
-    message: `Staff ${req.user.name} has commenced work on complaint ${complaint.complaintNumber}.`,
-    complaint: complaint._id
-  });
+  try {
+    await createNotification({
+      recipientId: complaint.citizen,
+      type: "COMPLAINT_IN_PROGRESS",
+      title: "Work In Progress",
+      message: `Staff ${req.user.name} has commenced work on complaint ${complaint.complaintNumber}.`,
+      complaintId: complaint._id,
+      actorId: req.user._id
+    });
+  } catch (notifErr) {
+    console.error("[Staff] Notification error (non-fatal):", notifErr.message);
+  }
 
   res.status(200).json(
     new ApiResponse(
@@ -211,26 +216,36 @@ export const resolveTask = asyncHandler(async (req, res) => {
     message: `Issue resolved by ${req.user.name}. Resolution remarks: "${remarks.trim()}". After-resolution photo uploaded.`
   });
 
-  // Notify Citizen with Before/After review prompt
-  await Notification.create({
-    recipient: complaint.citizen,
-    type: "COMPLAINT_RESOLVED",
-    title: "Complaint Resolved — Review Needed",
-    message: `Your complaint ${complaint.complaintNumber} was marked RESOLVED. Please review the before/after photos and confirm or reopen.`,
-    complaint: complaint._id
-  });
+  // Send notifications
+  try {
+    const notifications = [];
 
-  // Notify Admins
-  const admins = await User.find({ role: "ADMIN", isActive: true });
-  const adminNotifications = admins.map((admin) => ({
-    recipient: admin._id,
-    type: "COMPLAINT_RESOLVED",
-    title: "Complaint Resolved",
-    message: `Complaint ${complaint.complaintNumber} has been marked resolved by staff ${req.user.name}.`,
-    complaint: complaint._id
-  }));
-  if (adminNotifications.length > 0) {
-    await Notification.insertMany(adminNotifications);
+    // Notify Citizen with Before/After review prompt
+    notifications.push({
+      recipientId: complaint.citizen,
+      type: "COMPLAINT_RESOLVED",
+      title: "Complaint Resolved — Review Needed",
+      message: `Your complaint ${complaint.complaintNumber} was marked RESOLVED. Please review the before/after photos and confirm or reopen.`,
+      complaintId: complaint._id,
+      actorId: req.user._id
+    });
+
+    // Notify Admins
+    const admins = await User.find({ role: "ADMIN", isActive: true });
+    admins.forEach((admin) => {
+      notifications.push({
+        recipientId: admin._id,
+        type: "COMPLAINT_RESOLVED",
+        title: "Complaint Resolved",
+        message: `Complaint ${complaint.complaintNumber} has been marked resolved by staff ${req.user.name}.`,
+        complaintId: complaint._id,
+        actorId: req.user._id
+      });
+    });
+
+    await createBulkNotifications(notifications);
+  } catch (notifErr) {
+    console.error("[Staff] Notification error (non-fatal):", notifErr.message);
   }
 
   res.status(200).json(

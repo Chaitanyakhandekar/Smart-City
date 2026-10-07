@@ -1,12 +1,12 @@
 import { Complaint } from "../models/complaints.model.js";
 import { ComplaintImage } from "../models/complaintImages.model.js";
 import { ComplaintUpdate } from "../models/complaintUpdates.model.js";
-import { Notification } from "../models/notifications.model.js";
 import { User } from "../models/users.model.js";
 import { ApiError, ApiResponse } from "../utils/apiUtils.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { generateComplaintNumber } from "../utils/complaintNumber.js";
 import { analyzeComplaintImageAndText } from "../services/aiService.js";
+import { createNotification, createBulkNotifications } from "../services/notification.service.js";
 
 /**
  * Citizen: Submit a new civic complaint with image
@@ -101,28 +101,33 @@ export const createComplaint = asyncHandler(async (req, res) => {
     message: `Complaint registered by ${req.user.name}. AI auto-classification: ${finalAiCat}${finalAiSub ? ` (${finalAiSub})` : ""} - Priority: ${finalAiPrio} (${Math.round(finalAiConf * 100)}% confidence).`
   });
 
-  // Notify Admins
-  const admins = await User.find({ role: "ADMIN", isActive: true });
-  const adminNotifications = admins.map((admin) => ({
-    recipient: admin._id,
-    type: "NEW_COMPLAINT",
-    title: "New Complaint Submitted",
-    message: `New issue ${complaintNumber} reported in ${category} at ${locationAddress}.`,
-    complaint: complaint._id
-  }));
+  // Notify Admins via central notification service
+  try {
+    const admins = await User.find({ role: "ADMIN", isActive: true });
+    const isCritical = ["HIGH", "CRITICAL"].includes(resolvedPriority);
 
-  if (adminNotifications.length > 0) {
-    await Notification.insertMany(adminNotifications);
+    await createBulkNotifications(
+      admins.map((admin) => ({
+        recipientId: admin._id,
+        type: "COMPLAINT_CREATED",
+        title: isCritical ? "⚠️ Critical Complaint Submitted" : "New Complaint Submitted",
+        message: `New issue ${complaintNumber} reported in ${resolvedCategory} at ${locationAddress}.`,
+        complaintId: complaint._id,
+        actorId: req.user._id
+      }))
+    );
+
+    // Notify citizen of successful creation
+    await createNotification({
+      recipientId: req.user._id,
+      type: "COMPLAINT_CREATED",
+      title: "Complaint Registered",
+      message: `Your complaint ${complaintNumber} has been received and queued for review.`,
+      complaintId: complaint._id
+    });
+  } catch (notifErr) {
+    console.error("[Complaint] Notification delivery error (non-fatal):", notifErr.message);
   }
-
-  // Also notify citizen of successful creation
-  await Notification.create({
-    recipient: req.user._id,
-    type: "COMPLAINT_SUBMITTED",
-    title: "Complaint Registered",
-    message: `Your complaint ${complaintNumber} has been received and queued for review.`,
-    complaint: complaint._id
-  });
 
   res.status(201).json(
     new ApiResponse(
@@ -264,14 +269,19 @@ export const confirmResolution = asyncHandler(async (req, res) => {
   });
 
   // Notify assigned staff if present
-  if (complaint.assignedStaff) {
-    await Notification.create({
-      recipient: complaint.assignedStaff,
-      type: "RESOLUTION_CONFIRMED",
-      title: "Resolution Confirmed",
-      message: `Citizen confirmed satisfactory resolution for ${complaint.complaintNumber}. Great work!`,
-      complaint: complaint._id
-    });
+  try {
+    if (complaint.assignedStaff) {
+      await createNotification({
+        recipientId: complaint.assignedStaff,
+        type: "COMPLAINT_STATUS_CHANGED",
+        title: "Resolution Confirmed",
+        message: `Citizen confirmed satisfactory resolution for ${complaint.complaintNumber}. Great work!`,
+        complaintId: complaint._id,
+        actorId: req.user._id
+      });
+    }
+  } catch (notifErr) {
+    console.error("[Complaint] Notification error (non-fatal):", notifErr.message);
   }
 
   res.status(200).json(
@@ -317,28 +327,32 @@ export const reopenComplaint = asyncHandler(async (req, res) => {
     message: `Citizen ${req.user.name} reopened the complaint. Reason: "${reopenReason.trim()}". Priority escalated to HIGH.`
   });
 
-  // Notify Admins
-  const admins = await User.find({ role: "ADMIN", isActive: true });
-  const adminNotifications = admins.map((admin) => ({
-    recipient: admin._id,
-    type: "COMPLAINT_REOPENED",
-    title: "Complaint Reopened",
-    message: `Complaint ${complaint.complaintNumber} was reopened by citizen. Reason: ${reopenReason.trim()}`,
-    complaint: complaint._id
-  }));
-  if (adminNotifications.length > 0) {
-    await Notification.insertMany(adminNotifications);
-  }
+  // Notify Admins + assigned staff
+  try {
+    const admins = await User.find({ role: "ADMIN", isActive: true });
+    await createBulkNotifications(
+      admins.map((admin) => ({
+        recipientId: admin._id,
+        type: "COMPLAINT_REOPENED",
+        title: "Complaint Reopened",
+        message: `Complaint ${complaint.complaintNumber} was reopened by citizen. Reason: ${reopenReason.trim()}`,
+        complaintId: complaint._id,
+        actorId: req.user._id
+      }))
+    );
 
-  // Notify assigned staff
-  if (complaint.assignedStaff) {
-    await Notification.create({
-      recipient: complaint.assignedStaff,
-      type: "COMPLAINT_REOPENED",
-      title: "Task Reopened",
-      message: `Citizen reopened complaint ${complaint.complaintNumber}. Reason: ${reopenReason.trim()}`,
-      complaint: complaint._id
-    });
+    if (complaint.assignedStaff) {
+      await createNotification({
+        recipientId: complaint.assignedStaff,
+        type: "COMPLAINT_REOPENED",
+        title: "Task Reopened",
+        message: `Citizen reopened complaint ${complaint.complaintNumber}. Reason: ${reopenReason.trim()}`,
+        complaintId: complaint._id,
+        actorId: req.user._id
+      });
+    }
+  } catch (notifErr) {
+    console.error("[Complaint] Notification error (non-fatal):", notifErr.message);
   }
 
   res.status(200).json(
@@ -375,6 +389,7 @@ export const getCitizenDashboard = asyncHandler(async (req, res) => {
     .limit(5)
     .populate("assignedStaff", "name department designation");
 
+  const { Notification } = await import("../models/notifications.model.js");
   const recentNotifications = await Notification.find({ recipient: citizenId })
     .sort({ createdAt: -1 })
     .limit(5);

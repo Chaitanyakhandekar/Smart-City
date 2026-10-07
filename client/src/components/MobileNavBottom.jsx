@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContex";
+import { useNotification } from "../context/notificationContext";
 import {
   Home,
   FileText,
@@ -17,6 +18,7 @@ import {
 
 export const MobileNavBottom = () => {
   const { user, role, logout } = useAuth();
+  const { unreadCount } = useNotification();
   const navigate = useNavigate();
   const [showMore, setShowMore] = useState(false);
 
@@ -137,7 +139,12 @@ export const MobileNavBottom = () => {
             onClick={() => setShowMore(true)}
             className="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-white font-medium transition-colors"
           >
-            <MoreHorizontal className="w-5 h-5 mb-0.5" />
+            <div className="relative">
+              <MoreHorizontal className="w-5 h-5 mb-0.5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-rose-600 ring-2 ring-white" />
+              )}
+            </div>
             <span className="text-[10px] tracking-tight">More</span>
           </button>
         </nav>
@@ -180,7 +187,14 @@ export const MobileNavBottom = () => {
             }`
           }
         >
-          <Bell className="w-5 h-5 mb-0.5" />
+          <div className="relative">
+            <Bell className="w-5 h-5 mb-0.5" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1.5 -right-2.5 min-w-4 h-4 px-1 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
+          </div>
           <span className="text-[10px] tracking-tight">Alerts</span>
         </NavLink>
 
@@ -243,7 +257,14 @@ export const MobileNavBottom = () => {
           }`
         }
       >
-        <Bell className="w-5 h-5 mb-0.5" />
+        <div className="relative">
+          <Bell className="w-5 h-5 mb-0.5" />
+          {unreadCount > 0 && (
+            <span className="absolute -top-1.5 -right-2.5 min-w-4 h-4 px-1 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
+          )}
+        </div>
         <span className="text-[10px] tracking-tight">Alerts</span>
       </NavLink>
 

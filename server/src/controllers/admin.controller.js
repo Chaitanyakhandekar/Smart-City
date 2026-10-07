@@ -1,10 +1,10 @@
 import { Complaint } from "../models/complaints.model.js";
 import { ComplaintImage } from "../models/complaintImages.model.js";
 import { ComplaintUpdate } from "../models/complaintUpdates.model.js";
-import { Notification } from "../models/notifications.model.js";
 import { User, DEPARTMENTS } from "../models/users.model.js";
 import { ApiError, ApiResponse } from "../utils/apiUtils.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { createNotification, createBulkNotifications } from "../services/notification.service.js";
 
 /**
  * Admin: Real Dashboard Metrics and Aggregations from MongoDB Atlas
@@ -143,7 +143,10 @@ export const updateComplaint = asyncHandler(async (req, res) => {
   const complaint = await Complaint.findById(id);
   if (!complaint) throw new ApiError(404, "Complaint not found.");
 
+  const oldPriority = complaint.priority;
+  const oldStatus = complaint.status;
   let changes = [];
+
   if (category && category !== complaint.category) {
     changes.push(`Category changed from "${complaint.category}" to "${category}"`);
     complaint.category = category;
@@ -169,6 +172,60 @@ export const updateComplaint = asyncHandler(async (req, res) => {
       status: complaint.status,
       message: `Admin ${req.user.name} reviewed complaint: ${changes.join(", ")}.`
     });
+
+    // Notify citizen of changes
+    try {
+      const notifications = [];
+
+      if (priority && priority !== oldPriority) {
+        notifications.push({
+          recipientId: complaint.citizen,
+          type: "PRIORITY_CHANGED",
+          title: "Complaint Priority Updated",
+          message: `Your complaint ${complaint.complaintNumber} priority has been updated to ${priority}.`,
+          complaintId: complaint._id,
+          actorId: req.user._id
+        });
+      }
+
+      if (status && status !== oldStatus) {
+        const statusMessages = {
+          UNDER_REVIEW: "Your complaint is now under review by the administration.",
+          ASSIGNED: "Your complaint has been assigned to a staff member.",
+          IN_PROGRESS: "Staff has started working on your complaint.",
+          RESOLVED: "Your complaint has been marked as resolved.",
+          REJECTED: "Your complaint has been reviewed and could not be processed.",
+          REOPENED: "Your complaint has been reopened for further investigation."
+        };
+
+        notifications.push({
+          recipientId: complaint.citizen,
+          type: "COMPLAINT_STATUS_CHANGED",
+          title: `Complaint ${status.replace("_", " ")}`,
+          message: statusMessages[status] || `Your complaint ${complaint.complaintNumber} status changed to ${status}.`,
+          complaintId: complaint._id,
+          actorId: req.user._id
+        });
+      }
+
+      // Notify assigned staff of priority changes
+      if (priority && priority !== oldPriority && complaint.assignedStaff) {
+        notifications.push({
+          recipientId: complaint.assignedStaff,
+          type: "PRIORITY_CHANGED",
+          title: "Task Priority Changed",
+          message: `Complaint ${complaint.complaintNumber} priority updated to ${priority} by admin.`,
+          complaintId: complaint._id,
+          actorId: req.user._id
+        });
+      }
+
+      if (notifications.length > 0) {
+        await createBulkNotifications(notifications);
+      }
+    } catch (notifErr) {
+      console.error("[Admin] Notification error (non-fatal):", notifErr.message);
+    }
   }
 
   res.status(200).json(
@@ -196,6 +253,7 @@ export const assignStaff = asyncHandler(async (req, res) => {
   }
 
   const isReassignment = !!complaint.assignedStaff;
+  const previousStaffId = complaint.assignedStaff;
   complaint.assignedStaff = staff._id;
   complaint.status = "ASSIGNED";
   await complaint.save();
@@ -211,23 +269,46 @@ export const assignStaff = asyncHandler(async (req, res) => {
     message: remarks ? `${actionText} Note: "${remarks}"` : actionText
   });
 
-  // Notify assigned staff
-  await Notification.create({
-    recipient: staff._id,
-    type: "NEW_ASSIGNMENT",
-    title: isReassignment ? "Task Reassigned to You" : "New Task Assigned",
-    message: `You have been assigned to handle complaint ${complaint.complaintNumber} (${complaint.category}) at ${complaint.locationAddress}.`,
-    complaint: complaint._id
-  });
+  // Send notifications
+  try {
+    const notifications = [];
 
-  // Notify citizen
-  await Notification.create({
-    recipient: complaint.citizen,
-    type: "STATUS_UPDATE",
-    title: "Staff Assigned",
-    message: `Municipal officer ${staff.name} (${staff.department}) has been assigned to resolve your complaint ${complaint.complaintNumber}.`,
-    complaint: complaint._id
-  });
+    // Notify newly assigned staff
+    notifications.push({
+      recipientId: staff._id,
+      type: "COMPLAINT_ASSIGNED",
+      title: isReassignment ? "Task Reassigned to You" : "New Task Assigned",
+      message: `You have been assigned to handle complaint ${complaint.complaintNumber} (${complaint.category}) at ${complaint.locationAddress}.`,
+      complaintId: complaint._id,
+      actorId: req.user._id
+    });
+
+    // Notify citizen
+    notifications.push({
+      recipientId: complaint.citizen,
+      type: "COMPLAINT_ASSIGNED",
+      title: "Staff Assigned",
+      message: `Municipal officer ${staff.name} (${staff.department}) has been assigned to resolve your complaint ${complaint.complaintNumber}.`,
+      complaintId: complaint._id,
+      actorId: req.user._id
+    });
+
+    // If reassignment, notify previous staff they've been unassigned
+    if (isReassignment && previousStaffId && previousStaffId.toString() !== staff._id.toString()) {
+      notifications.push({
+        recipientId: previousStaffId,
+        type: "STAFF_UNASSIGNED",
+        title: "Task Reassigned",
+        message: `Complaint ${complaint.complaintNumber} has been reassigned to another staff member.`,
+        complaintId: complaint._id,
+        actorId: req.user._id
+      });
+    }
+
+    await createBulkNotifications(notifications);
+  } catch (notifErr) {
+    console.error("[Admin] Notification error (non-fatal):", notifErr.message);
+  }
 
   res.status(200).json(
     new ApiResponse(200, { complaint, staff }, `Complaint successfully assigned to ${staff.name}.`)
@@ -259,13 +340,18 @@ export const rejectComplaint = asyncHandler(async (req, res) => {
   });
 
   // Notify Citizen
-  await Notification.create({
-    recipient: complaint.citizen,
-    type: "COMPLAINT_REJECTED",
-    title: "Complaint Rejected",
-    message: `Your complaint ${complaint.complaintNumber} could not be processed. Reason: ${reason.trim()}`,
-    complaint: complaint._id
-  });
+  try {
+    await createNotification({
+      recipientId: complaint.citizen,
+      type: "COMPLAINT_REJECTED",
+      title: "Complaint Rejected",
+      message: `Your complaint ${complaint.complaintNumber} could not be processed. Reason: ${reason.trim()}`,
+      complaintId: complaint._id,
+      actorId: req.user._id
+    });
+  } catch (notifErr) {
+    console.error("[Admin] Notification error (non-fatal):", notifErr.message);
+  }
 
   res.status(200).json(
     new ApiResponse(200, { complaint }, "Complaint rejected.")

@@ -1,11 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import MobileNavBottom from "../../components/MobileNavBottom";
 import ChatbotWidget from "../../components/ChatbotWidget";
-import { notificationApi } from "../../api/client";
-import { Bell, Check, Clock, ArrowRight, Loader2 } from "lucide-react";
+import PushNotificationBanner from "../../components/PushNotificationBanner";
+import { useNotification } from "../../context/notificationContext";
+import {
+  Bell,
+  Check,
+  ArrowRight,
+  Loader2,
+  CheckCheck,
+  AlertCircle,
+  FileText,
+  Clock,
+  MessageSquare
+} from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -13,44 +24,29 @@ dayjs.extend(relativeTime);
 
 export const CitizenNotifications = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState([]);
+  const {
+    notifications,
+    loading,
+    markAsRead,
+    markAllAsRead,
+    socketConnected
+  } = useNotification();
 
-  const fetchNotifications = async () => {
-    try {
-      setLoading(true);
-      const res = await notificationApi.getMyNotifications();
-      if (res.data?.data) {
-        setNotifications(res.data.data.notifications || []);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotifications();
-  }, []);
-
-  const handleMarkAll = async () => {
-    try {
-      await notificationApi.markAllAsRead();
-      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleMarkOne = async (id) => {
-    try {
-      await notificationApi.markAsRead(id);
-      setNotifications((prev) =>
-        prev.map((n) => (n._id === id ? { ...n, isRead: true } : n))
-      );
-    } catch (err) {
-      console.error(err);
+  const getNotificationIcon = (type) => {
+    switch (type) {
+      case "COMPLAINT_RESOLVED":
+      case "WORK_COMPLETED":
+        return <CheckCheck className="w-4 h-4 text-emerald-600" />;
+      case "COMPLAINT_CRITICAL_ALERT":
+      case "PRIORITY_CHANGED":
+        return <AlertCircle className="w-4 h-4 text-rose-600" />;
+      case "NEW_COMMENT":
+        return <MessageSquare className="w-4 h-4 text-indigo-600" />;
+      case "WORK_IN_PROGRESS":
+      case "STAFF_ASSIGNED":
+        return <Clock className="w-4 h-4 text-blue-600" />;
+      default:
+        return <FileText className="w-4 h-4 text-slate-600" />;
     }
   };
 
@@ -62,7 +58,7 @@ export const CitizenNotifications = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <main className="flex-1 lg:ml-64 p-4 sm:p-6 lg:p-8 min-w-0 space-y-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
                 Civic Notifications
@@ -71,6 +67,7 @@ export const CitizenNotifications = () => {
                 Real-time updates regarding your filed complaints and municipal actions
               </p>
             </div>
+
             {notifications.some((n) => !n.isRead) && (
               <button
                 onClick={handleMarkAll}
@@ -118,7 +115,6 @@ export const CitizenNotifications = () => {
                           {n.message}
                         </p>
                       </div>
-                    </div>
 
                     <div className="flex items-center gap-2 flex-shrink-0">
                       {n.complaint && (
@@ -131,8 +127,8 @@ export const CitizenNotifications = () => {
                         </Link>
                       )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
